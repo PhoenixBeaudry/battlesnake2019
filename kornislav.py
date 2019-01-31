@@ -2,7 +2,7 @@
 """Built for BattleSnake 2019"""
 
 
-import bottle, json
+import bottle, json, os
 from bottle import Bottle, run, post, get, request, response
 from json import dumps
 app = Bottle()
