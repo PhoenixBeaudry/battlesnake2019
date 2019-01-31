@@ -28,6 +28,7 @@ def enable_cors(fn):
 
 """Root Response"""
 @app.route('/')
+@enable_cors
 def hello():
     return "Hello, World!"
 
@@ -35,6 +36,7 @@ def hello():
 
 """Signals Game Start"""
 @app.post('/start')
+@enable_cors
 def start():
 
     try:
@@ -53,6 +55,7 @@ def start():
 
 """Server is requesting a Move"""
 @app.post('/move')
+@enable_cors
 def move():
     try:
         data = request.json
