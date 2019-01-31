@@ -66,6 +66,7 @@ def move():
 
     return dumps(val)
 
-
-
-run(app, host='192.168.1.100', port=25565)
+if os.environ.get('APP_LOCATION') == 'heroku':
+    run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+else:
+    run(host='192.169.1.100', port=25565, debug=True)
