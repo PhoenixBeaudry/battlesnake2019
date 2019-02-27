@@ -50,6 +50,12 @@ def start():
     return dumps(val)
 
 
+"""Signals Game Start"""
+@app.post('/ping')
+def ping():
+    return bottle.HTTPResponse(status=200)
+
+
 
 
 
@@ -62,7 +68,7 @@ def move():
     except:
         raise ValueError 
 
-    val = [{"cool": "cool"}]
+    val = [{"move": "right"}]
     response.content_type = 'application/json'
 
     return dumps(val)
