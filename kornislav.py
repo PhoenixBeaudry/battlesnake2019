@@ -10,7 +10,7 @@ app = Bottle()
 
 
 """Root Response"""
-@app.get('/')
+@app.route('/')
 def hello():
     return "Hello, World!"
 
@@ -53,7 +53,12 @@ def move():
 
     return dumps(val)
 
+
+run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
+
+'''
 if os.environ.get('APP_LOCATION') == 'heroku':
     run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
 else:
     run(host='192.169.1.100', port=25565, debug=True)
+'''
