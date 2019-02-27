@@ -25,11 +25,15 @@ def start():
     except:
         raise ValueError 
 
-    val = [{"cool": "cool"}]
+    val = [{
+			"color": "#ff00ff",
+			"headType": "bendr",
+			"tailType": "pixel"
+			}]
+
     response.content_type = 'application/json'
-
-    return dumps(val)
-
+	return dumps(val)
+	
 
 """Signals Game Start"""
 @app.post('/ping')
