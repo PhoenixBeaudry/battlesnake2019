@@ -62,7 +62,7 @@ def end():
 
 
 
-run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
+run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 '''
 if os.environ.get('APP_LOCATION') == 'heroku':
