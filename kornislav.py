@@ -10,7 +10,7 @@ app = Bottle()
 
 
 """Root Response"""
-@app.route('/')
+@app.get('/')
 def hello():
     return "Hello, World!"
 
