@@ -25,7 +25,7 @@ def start():
     except:
         raise ValueError 
 
-    val = [{"color": "#ff00ff", "headType": "bendr", "tailType": "pixel"}]
+    val = {"color": "#ff00ff", "headType": "bendr", "tailType": "pixel"}
 
     response.content_type = 'application/json'
     
@@ -49,7 +49,7 @@ def move():
     except:
         raise ValueError 
 
-    val = [{"move": "right"}]
+    val = {"move": "right"}
     response.content_type = 'application/json'
 
     return dumps(val)
