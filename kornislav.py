@@ -32,7 +32,7 @@ def start():
     return dumps(val)
 
 
-"""Signals Game Start"""
+"""Respond to Pings"""
 @app.post('/ping')
 def ping():
     return bottle.HTTPResponse(status=200)
@@ -53,6 +53,13 @@ def move():
     response.content_type = 'application/json'
 
     return dumps(val)
+
+
+""" Game has ended """
+@app.post('/end')
+def end():
+    return bottle.HTTPResponse(status=200)
+
 
 
 run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
