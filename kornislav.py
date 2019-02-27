@@ -5,6 +5,7 @@
 import bottle, json, os
 from bottle import Bottle, run, post, get, request, response
 from json import dumps
+from logic import *
 app = Bottle()
 
 
@@ -21,7 +22,7 @@ def hello():
 def start():
 
     try:
-        data = request.json
+        data = bottle.request.json
     except:
         raise ValueError 
 
@@ -44,8 +45,12 @@ def ping():
 """Server is requesting a Move"""
 @app.post('/move')
 def move():
+    directions = ['up', 'down', 'left', 'right']
     try:
-        data = request.json
+        data = bottle.request.json
+        game_id = data['game']
+        board_width = data['board']['width']
+        board_height = data['board']['height']
     except:
         raise ValueError 
 
