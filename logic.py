@@ -26,7 +26,8 @@ class Board:
         
         # creates a list of snakes
         for snake in data['board']['snakes']:
-            for body in snake:
+            snakebody = snake['body']
+            for body in snakebody:
                 x = body['x']
                 y = body['y']
                 snake_body.append((x,y))
@@ -34,7 +35,7 @@ class Board:
             snake_body = []
 
         # creates a location of ourselves
-        for body in data['you']:
+        for body in data['you']['body']:
             x = body['x']
             y = body['y']
             our_snake.append((x,y))
