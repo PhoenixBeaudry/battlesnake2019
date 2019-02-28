@@ -1,5 +1,5 @@
 import networkx as nx
-
+import bottle
 
 class Board:
     def __init__(self, data):
@@ -18,7 +18,9 @@ class Board:
             except:
                 raise ValueError 
             for food in data['board']['food']:
-                food_list.append(food)
+                x = data['x']:
+                y = data['y']:
+                food_list.append(tuple([x,y]))
             return food
 
 
