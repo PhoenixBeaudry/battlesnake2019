@@ -65,6 +65,7 @@ def dummygraph():
     
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
+    populateGraph(board)
     for food in gameboard.food:
         enhance_cell(board, food, strategy['food_function'])
 
@@ -83,8 +84,12 @@ def enhance_cell(board, start_node, func, myself=False):
         edge_list = list(nx.bfs_edges(board, start_node, depth_limit=1))
         edge_list = list(set(edge_list) - set(visited_edges))
         for edge in edge_list:
+<<<<<<< HEAD
             print(edge)
             board[edge[0]][edge[1]][2] = board[edge[0]][edge[1]][2] + func(depth)
+=======
+            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
+>>>>>>> 7e8c2a70d593b41e00677d847315acddf2dd0fc9
         visited_edges = visited_edges + edge_list
     else:
         for depth in range(1, len(board)):
@@ -95,3 +100,7 @@ def enhance_cell(board, start_node, func, myself=False):
                 board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
             visited_edges = visited_edges + edge_list
 
+
+def populateGraph(board):
+    for edge in board.edges:
+        board[edge[0]][edge[1]]['weight'] = 0
