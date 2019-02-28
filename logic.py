@@ -61,7 +61,8 @@ def generate_graph(strategy, gameboard):
         enhance_cell(board, food, strategy['food_function'])
 
     for enemy in gameboard.enemies:
-        enhance_cell(board, enemy, strategy['enemy_function'])
+        for enemypart in enemy:
+            enhance_cell(board, enemy, strategy['enemy_function'])
 
     for bodypart in gameboard.myself:
         enhance_cell(board, bodypart, strategy['self_function'], myself=True)
