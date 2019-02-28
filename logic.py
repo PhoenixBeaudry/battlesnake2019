@@ -96,7 +96,6 @@ def enhance_cell(board, start_node, func, myself=False):
             for edge in edge_list:
                 board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
             if(visited_edges == visited_edges + edge_list):
-                print(depth)
                 break
             visited_edges = visited_edges + edge_list
 
