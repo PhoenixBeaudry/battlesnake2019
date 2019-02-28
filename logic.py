@@ -3,25 +3,16 @@ import bottle
 
 class Board:
     def __init__(self, data):
-
-        def size():
-            try:
-                data = bottle.request.json
-            except:
-                raise ValueError 
-            board_size = data['board']['width']
-            return board_size
-        def food():
-            food_list = []
-            try:
-                data = bottle.request.json
-            except:
-                raise ValueError 
-            for food in data['board']['food']:
-                x = data['x']
-                y = data['y']
-                food_list.append(tuple([x,y]))
-            return food
+        try:
+            data = bottle.request.json
+        except:
+            raise ValueError 
+        size = data['board']['width']
+        food_list = []
+        for food in data['board']['food']:
+            x = food['x']
+            y = food['y']
+            food_list.append((x,y))
 
 
 def generate_graph(strategy, gameboard):
