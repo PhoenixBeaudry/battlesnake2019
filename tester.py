@@ -1,47 +1,86 @@
 #tester code for kornislav BFS implementation
 
+from logic import *
+from strategies import *
 import networkx as nx
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def populateGraph(board):
-    for edge in board.edges:
-        board[edge[0]][edge[1]]['weight'] = 0
+testdata = {
+  "game": {
+    "id": "game-id-string"
+  },
+  "turn": 4,
+  "board": {
+    "height": 15,
+    "width": 15,
+    "food": [
+      {
+        "x": 9,
+        "y": 8
+      }
+    ],
+    "snakes": [
+      {
+        "id": "snake-id-string",
+        "name": "Sneky Snek",
+        "health": 90,
+        "body": [
+          {
+            "x": 12,
+            "y": 2
+          }
+        ]
+      }
+    ]
+  },
+  "you": {
+    "id": "snake-id-string",
+    "name": "Sneky Snek",
+    "health": 90,
+    "body": [
+      {
+        "x": 1,
+        "y": 3
+      }
+    ]
+  }
+}
 
-def enhance_cell(board, start_node, func):
-    visited_edges = []
-    for depth in range(1, len(board)):
-        edge_list = list(nx.bfs_edges(board, start_node, depth_limit = depth))
-        edge_list = list(set(edge_list) - set(visited_edges))
-        for edge in edge_list:
-            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
-        if(visited_edges == visited_edges + edge_list):
-            break
-        visited_edges = visited_edges + edge_list
+#Setup board state
+gameboard = Board(testdata)
+graph = generate_graph(strat_one, gameboard)
 
 
-size = 5
-graph = nx.grid_2d_graph(size, size)
-
-populateGraph(graph)
-f = lambda d : 5 - (d-1)*2
-enhance_cell(graph, (2,2), f)
-
+#Setup plot
+plt.figure(figsize=(15,15))
 pos = {}
 for node in graph:
 	pos[node] = node
-print(pos)
+#Draw all nodes
+nx.draw_networkx(graph, pos, font_size=7)
 
-# nodes
-nx.draw_networkx(graph, pos, font_size=8)
+#Color food nodes
+nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
+
+#Color self nodes
+nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.myself, node_color='blue')
+
+#Color enemy nodes
+enemylist = []
+for enemy in gameboard.enemies:
+	for enemypart in enemy:
+		enemylist.append(enemypart)
+
+nx.draw_networkx_nodes(graph, pos, nodelist=enemylist, node_color='black')
 
 edges = {}
 
 for edge in graph.edges:
 	edges[edge] = graph[edge[0]][edge[1]]['weight']
 
-nx.draw_networkx_edge_labels(graph, pos, edges, font_size=8)
+nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 
 
 plt.axis('off')
