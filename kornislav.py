@@ -77,6 +77,7 @@ def move():
 
     print(lightestedge)
     val = {"move": next_direction(gameboard.myself[0], lightestedge)}
+    print(val)
     response.content_type = 'application/json'
 
     return dumps(val)
