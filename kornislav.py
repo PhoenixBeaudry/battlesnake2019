@@ -21,7 +21,6 @@ def hello():
 """Signals Game Start"""
 @app.post('/start')
 def start():
-
     try:
         data = bottle.request.json
     except:
@@ -43,8 +42,7 @@ def ping():
 
 @app.post('/test')
 def test():
-    board = generate_graph(5, 5)
-    enhance_cell(board, (0,0), -1)
+    generate_graph(1, 1)
     return bottle.HTTPResponse(status=200)
 
 
@@ -60,9 +58,18 @@ def move():
     except:
         raise ValueError 
 
-    decision = Board.generate_board()
+    gameboard = generate_board(data)
 
-    val = {"move": decision}
+    board_graph = generate_graph(current_strategy, gameboard)
+
+    lightestedge = 1000000
+    for edge in nx.edges(board_graph, gameboard.myself[0]):
+        if(edge['weight'] < lightestedge):
+            lightestedge = edge
+
+
+
+    val = {"move": }
     response.content_type = 'application/json'
 
     return dumps(val)
