@@ -43,7 +43,8 @@ def ping():
 
 @app.post('/test')
 def test():
-    generate_graph(1, 1)
+    board = generate_graph(5, 5)
+    enhance_cell(board, (0,0), -1)
     return bottle.HTTPResponse(status=200)
 
 
