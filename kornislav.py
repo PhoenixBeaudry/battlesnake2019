@@ -59,7 +59,7 @@ def move():
     except:
         raise ValueError 
 
-    gameboard = generate_board(data)
+    gameboard = Board(data)
 
     board_graph = generate_graph(strat_one, gameboard)
 
