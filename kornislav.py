@@ -72,7 +72,7 @@ def move():
             lightestedge = edge
             lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
 
-
+    print(lightestedge)
     val = {"move": next_direction(gameboard.myself[0], lightestedge)}
     response.content_type = 'application/json'
 

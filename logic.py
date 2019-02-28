@@ -46,7 +46,7 @@ class Board:
         
 def next_direction(snake_head, input_destination):
 
-    if snake_head[0] == input_destination[0][0] and snake_head[1] == input_destination[0][1]:
+    if snake_head == input_destination[0]:
         destination = input_destination[1]
     else:
         destination = input_destination[0]
