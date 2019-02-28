@@ -1,6 +1,9 @@
 #tester code for kornislav BFS implementation
 
 import networkx as nx
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 def populateGraph(board):
     for edge in board.edges:
@@ -20,50 +23,27 @@ def enhance_cell(board, start_node, func):
 
 size = 5
 graph = nx.grid_2d_graph(size, size)
+
 populateGraph(graph)
 f = lambda d : 5 - (d-1)*2
 enhance_cell(graph, (2,2), f)
 
-edges = []
+pos = {}
+for node in graph:
+	pos[node] = node
+print(pos)
+
+# nodes
+nx.draw_networkx(graph, pos, font_size=8)
+
+edges = {}
 
 for edge in graph.edges:
-	a = edge[0][0]
-	b = edge[0][1]
-	c = edge[1][0]
-	d = edge[1][1]
-	if (a+b) > (c+d):
-		ta = a
-		tb = b
-		a = c
-		b = d
-		c = ta
-		d = tb
+	edges[edge] = graph[edge[0]][edge[1]]['weight']
 
-	edges.append([a,b,c,d,graph[edge[0]][edge[1]]['weight']])
+nx.draw_networkx_edge_labels(graph, pos, edges, font_size=8)
 
-for i in [0, 2, 1, 3]:
-	edges = sorted(edges, key = lambda x : x[i])
 
-w = []
-for e in edges:
-	#print e
-	w.append(e[4])
-
-wi = 0
-for i in xrange(size*2 - 1):
-	if i%2==0:
-		pl = "   "
-		for j in xrange(size-1):
-			pl = pl + str(w[wi]).rjust(3) + "   "
-			wi = wi + 1
-	else:
-		pl = ""
-		for j in xrange(size):
-			pl = pl + str(w[wi]).rjust(3) + "   "
-			wi = wi + 1
-	print pl
-	
-'''
-for edge in graph.edges:
-	print str(edge) + " weight = " + str(graph[edge[0]][edge[1]]['weight'])
-'''
+plt.axis('off')
+plt.gca().invert_yaxis()
+plt.savefig("test")
