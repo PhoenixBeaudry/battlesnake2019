@@ -5,6 +5,7 @@
 import bottle, json, os
 from bottle import Bottle, run, post, get, request, response
 from json import dumps
+import networkx as nx
 from logic import *
 app = Bottle()
 
@@ -36,6 +37,13 @@ def start():
 """Respond to Pings"""
 @app.post('/ping')
 def ping():
+    return bottle.HTTPResponse(status=200)
+
+
+
+@app.post('/test')
+def test():
+    generate_board(1, 1)
     return bottle.HTTPResponse(status=200)
 
 
