@@ -14,10 +14,10 @@ class Board:
         except:
             raise ValueError 
         
-        food = []
+        self.food = []
         snake_body = []
-        enemies = []
-        myself = []
+        self.enemies = []
+        self.myself = []
 
         #gets the size of board
         size = data['board']['width']
@@ -26,7 +26,7 @@ class Board:
         for foodpiece in data['board']['food']:
             x = foodpiece['x']
             y = foodpiece['y']
-            food.append((x,y))
+            self.food.append((x,y))
         
         # creates a list of snakes
         for snake in data['board']['snakes']:
@@ -35,14 +35,14 @@ class Board:
                 x = body['x']
                 y = body['y']
                 snake_body.append((x,y))
-            enemies.append(snake_body)
+            self.enemies.append(snake_body)
             snake_body = []
 
         # creates a location of ourselves
         for body in data['you']['body']:
             x = body['x']
             y = body['y']
-            myself.append((x,y))
+            self.myself.append((x,y))
         
 def next_direction(snake_head, input_destination):
 
