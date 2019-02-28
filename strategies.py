@@ -1,8 +1,8 @@
 def linear_decay(weight, inc):
 	return lambda depth : weight - (depth-1)*inc
 
-def poly_decay(weight, inc):
-	return lambda depth: weight - (depth-1)**inc
+def poly_decay(weight, inc, sign=1):
+	return lambda depth: weight - sign*(depth-1)**inc
 
 def self_function():
 	return 1000000
@@ -10,7 +10,7 @@ def self_function():
 
 #Strategies:
 strat_one = {
-	'food_function' : poly_decay(-10000, 3),
+	'food_function' : poly_decay(-10000, 3, -1),
 	'enemy_function' : poly_decay(10000, 3),
 	'self_function' : self_function
 }
