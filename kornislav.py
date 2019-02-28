@@ -67,7 +67,7 @@ def move():
 
     lightestedge = 1000000
     for edge in nx.edges(board_graph, gameboard.myself[0]):
-        if(edge['weight'] < lightestedge):
+        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedge):
             lightestedge = edge
 
     val = {"move": next_direction(gameboard.myself[0], lightestedge)}
