@@ -60,6 +60,9 @@ def next_direction(snake_head, input_destination):
     if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
         return "left"
 
+def dummygraph():
+    return nx.grid_2d_graph(10, 10)
+    
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
     for food in gameboard.food:
@@ -80,6 +83,7 @@ def enhance_cell(board, start_node, func, myself=False):
         edge_list = list(nx.bfs_edges(board, start_node, depth_limit=1))
         edge_list = list(set(edge_list) - set(visited_edges))
         for edge in edge_list:
+            print(edge)
             board[edge[0]][edge[1]][2] = board[edge[0]][edge[1]][2] + func(depth)
         visited_edges = visited_edges + edge_list
     else:

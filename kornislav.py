@@ -43,7 +43,9 @@ def ping():
 
 @app.post('/test')
 def test():
-    generate_graph(1, 1)
+    newgraph = dummygraph()
+    newgraph[(0,0)][(0,1)]['weight'] = 10
+    print(newgraph[(0,0)][(0,1)])
     return bottle.HTTPResponse(status=200)
 
 
