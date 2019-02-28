@@ -65,10 +65,13 @@ def move():
 
     board_graph = generate_graph(strat_one, gameboard)
 
-    lightestedge = 1000000
+    lightestedgeweight = 1000000
+    lightestedge = None
     for edge in nx.edges(board_graph, gameboard.myself[0]):
         if(board_graph[edge[0]][edge[1]]['weight'] < lightestedge):
             lightestedge = edge
+            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+
 
     val = {"move": next_direction(gameboard.myself[0], lightestedge)}
     response.content_type = 'application/json'
