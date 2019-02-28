@@ -4,16 +4,22 @@ import networkx as nx
 class Board:
     def __init__(self, data):
 
-        def generate_board():
+        def size():
             try:
                 data = bottle.request.json
             except:
                 raise ValueError 
-            game_id = data['game']
-            board_width = data['board']['width']
-            board_height = data['board']['height']
-            decision = 'right'
-            return decision
+            board_size = data['board']['width']
+            return board_size
+        def food():
+            food_list = []
+            try:
+                data = bottle.request.json
+            except:
+                raise ValueError 
+            for food in data['board']['food']:
+                food_list.append(food)
+            return food
 
 
 def generate_graph(strategy, gameboard):
