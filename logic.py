@@ -7,12 +7,36 @@ class Board:
             data = bottle.request.json
         except:
             raise ValueError 
-        size = data['board']['width']
+        
         food_list = []
+        snake_body = []
+        snake_list = []
+        our_snake = []
+
+        #gets the size of board
+        size = data['board']['width']
+
+        # lists the food
         for food in data['board']['food']:
             x = food['x']
             y = food['y']
             food_list.append((x,y))
+        
+        # creates a list of snakes
+        for snake in data['board']['snakes']:
+            for body in snake:
+                x = snake['x']
+                y = snake['y']
+                snake_body.append((x,y))
+            snake_list.append(snake_body)
+            snake_body = []
+
+        # creates a location of ourselves
+        for body in data['you']:
+            x = body['x']
+            y = body['y']
+            our_snake.append((x,y))
+        
 
 
 def generate_graph(strategy, gameboard):
