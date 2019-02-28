@@ -10,7 +10,7 @@ def self_function():
 
 #Strategies:
 strat_one = {
-	'food_function' : linear_decay(-100, -10),
-	'enemy_function' : linear_decay(100, 10),
+	'food_function' : linear_decay(-1000, -20),
+	'enemy_function' : linear_decay(1000, 20),
 	'self_function' : self_function
 }
