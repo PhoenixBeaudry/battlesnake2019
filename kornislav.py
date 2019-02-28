@@ -65,7 +65,7 @@ def move():
 
     board_graph = generate_graph(strat_one, gameboard)
 
-    lightestedgeweight = 1000000
+    lightestedgeweight = 10000000
     lightestedge = None
     for edge in nx.edges(board_graph, gameboard.myself[0]):
         print("Current edge: ", edge)
