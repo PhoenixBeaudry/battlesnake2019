@@ -60,6 +60,9 @@ def next_direction(snake_head, input_destination):
     if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
         return "left"
 
+def dummygraph():
+    return nx.grid_2d_graph(10, 10)
+    
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
     populateGraph(board)
