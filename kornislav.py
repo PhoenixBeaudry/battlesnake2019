@@ -48,13 +48,12 @@ def move():
     directions = ['up', 'down', 'left', 'right']
     try:
         data = bottle.request.json
-        game_id = data['game']
-        board_width = data['board']['width']
-        board_height = data['board']['height']
     except:
         raise ValueError 
 
-    val = {"move": "right"}
+    decision = Board.generate_board()
+
+    val = {"move": decision}
     response.content_type = 'application/json'
 
     return dumps(val)
