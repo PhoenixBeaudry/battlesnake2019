@@ -67,6 +67,7 @@ def move():
 
     lightestedgeweight = 10000000
     lightestedge = None
+    print("Snake head: ", gameboard.myself[0])
     for edge in nx.edges(board_graph, gameboard.myself[0]):
         print("Current edge: ", edge)
         print("Current edge weight: ", board_graph[edge[0]][edge[1]]['weight'])
