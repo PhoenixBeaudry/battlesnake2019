@@ -37,7 +37,15 @@ class Board:
             y = body['y']
             our_snake.append((x,y))
         
-
+def next_direction(snake_head, destination):
+    if snake_head[0] - destination[0] == 0 AND snake_head[1] - destination[1] < 0:
+        return "up"
+    if snake_head[0] - destination[0]) == 0 AND snake_head[1] - destination[1] > 0:
+        return "down"
+    if snake_head[0] - destination[0] < 0 AND snake_head[1] - destination[1] == 0:
+        return "right"
+    if snake_head[0] - destination[0] > 0 AND snake_head[1] - destination[1] == 0:
+        return "left"
 
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(5, 5)
