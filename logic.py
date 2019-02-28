@@ -41,18 +41,18 @@ class Board:
         
 def next_direction(snake_head, input_destination):
 
-    if snake_head[0] == input_destination[0][0] AND snake_head[1] == input_destination[0][1]:
+    if snake_head[0] == input_destination[0][0] and snake_head[1] == input_destination[0][1]:
         destination = input_destination[1]
     else:
         destination = input_destination[0]
 
-    if snake_head[0] - destination[0] == 0 AND snake_head[1] - destination[1] < 0:
+    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] < 0:
         return "up"
-    if snake_head[0] - destination[0] == 0 AND snake_head[1] - destination[1] > 0:
+    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] > 0:
         return "down"
-    if snake_head[0] - destination[0] < 0 AND snake_head[1] - destination[1] == 0:
+    if snake_head[0] - destination[0] < 0 and snake_head[1] - destination[1] == 0:
         return "right"
-    if snake_head[0] - destination[0] > 0 AND snake_head[1] - destination[1] == 0:
+    if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
         return "left"
 
 def generate_graph(strategy, gameboard):
