@@ -1,4 +1,5 @@
 import networkx as nx
+from strategies import *
 
 
 class Board:
@@ -25,8 +26,9 @@ def enhance_cell(board, start_node, func):
 
     for depth in range(1, len(board)):
         print("Depth = ", depth)
-        edge_list = list(nx.bfs_edges(board, start_node, depth_limit=depth))
+        edge_list = list(nx.bfs_edges(board, start_node, depth_limit = depth))
         edge_list = list(set(edge_list) - set(visited_edges))
         for edge in edge_list:
             edge['weight'] = edge['weight'] + func(depth)
         visited_edges = visited_edges + edge_list
+
