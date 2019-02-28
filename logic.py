@@ -20,7 +20,7 @@ class Board:
         self.myself = []
 
         #gets the size of board
-        size = data['board']['width']
+        self.size = data['board']['width']
 
         # lists the food
         for foodpiece in data['board']['food']:
