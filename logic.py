@@ -4,25 +4,29 @@ from strategies import *
 import bottle
 
 class Board:
+    size = 0
+    food = None
+    enemies = None
+    myself = None
     def __init__(self, data):
         try:
             data = bottle.request.json
         except:
             raise ValueError 
         
-        food_list = []
+        food = []
         snake_body = []
-        snake_list = []
-        our_snake = []
+        enemies = []
+        myself = []
 
         #gets the size of board
         size = data['board']['width']
 
         # lists the food
-        for food in data['board']['food']:
-            x = food['x']
-            y = food['y']
-            food_list.append((x,y))
+        for foodpiece in data['board']['food']:
+            x = foodpiece['x']
+            y = foodpiece['y']
+            food.append((x,y))
         
         # creates a list of snakes
         for snake in data['board']['snakes']:
@@ -31,14 +35,14 @@ class Board:
                 x = body['x']
                 y = body['y']
                 snake_body.append((x,y))
-            snake_list.append(snake_body)
+            enemies.append(snake_body)
             snake_body = []
 
         # creates a location of ourselves
         for body in data['you']['body']:
             x = body['x']
             y = body['y']
-            our_snake.append((x,y))
+            myself.append((x,y))
         
 def next_direction(snake_head, input_destination):
 
