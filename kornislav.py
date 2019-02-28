@@ -68,7 +68,7 @@ def move():
     lightestedgeweight = 1000000
     lightestedge = None
     for edge in nx.edges(board_graph, gameboard.myself[0]):
-        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedge):
+        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
             lightestedge = edge
             lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
 
