@@ -18,8 +18,8 @@ class Board:
             except:
                 raise ValueError 
             for food in data['board']['food']:
-                x = data['x']:
-                y = data['y']:
+                x = data['x']
+                y = data['y']
                 food_list.append(tuple([x,y]))
             return food
 
