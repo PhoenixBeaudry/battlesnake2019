@@ -27,8 +27,8 @@ class Board:
         # creates a list of snakes
         for snake in data['board']['snakes']:
             for body in snake:
-                x = snake['x']
-                y = snake['y']
+                x = body['x']
+                y = body['y']
                 snake_body.append((x,y))
             snake_list.append(snake_body)
             snake_body = []
