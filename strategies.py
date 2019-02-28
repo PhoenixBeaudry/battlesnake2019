@@ -5,7 +5,7 @@ def poly_decay(weight, inc):
 	return lambda depth: weight - (depth-1)**inc
 
 def self_function():
-	return int("inf")
+	return 1000000
 
 
 #Strategies:
