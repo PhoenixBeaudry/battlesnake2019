@@ -1,10 +1,7 @@
 import networkx as nx
-<<<<<<< HEAD
 from strategies import *
 
-=======
 import bottle
->>>>>>> ae07315b8363ed647d6d7a3cd70633a6ccbc158e
 
 class Board:
     def __init__(self, data):
