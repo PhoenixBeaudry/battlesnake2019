@@ -51,9 +51,9 @@ def next_direction(snake_head, input_destination):
     else:
         destination = input_destination[0]
 
-    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] < 0:
-        return "up"
     if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] > 0:
+        return "up"
+    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] < 0:
         return "down"
     if snake_head[0] - destination[0] < 0 and snake_head[1] - destination[1] == 0:
         return "right"
