@@ -66,6 +66,10 @@ def dummygraph():
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
     populateGraph(board)
+
+    for bodypart in gameboard.myself:
+        enhance_cell(board, bodypart, strategy['self_function'], myself=True)
+    
     for food in gameboard.food:
         enhance_cell(board, food, strategy['food_function'])
 
@@ -73,8 +77,7 @@ def generate_graph(strategy, gameboard):
         for enemypart in enemy:
             enhance_cell(board, enemypart, strategy['enemy_function'])
 
-    for bodypart in gameboard.myself:
-        enhance_cell(board, bodypart, strategy['self_function'], myself=True)
+    
 
     return board
 
