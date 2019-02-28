@@ -94,7 +94,7 @@ def enhance_cell(board, start_node, func, myself=False):
             edge_list = list(nx.bfs_edges(board, start_node, depth_limit = depth))
             edge_list = list(set(edge_list) - set(visited_edges))
             for edge in edge_list:
-                board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] - func(depth)
+                board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
             if(visited_edges == visited_edges + edge_list):
                 break
             visited_edges = visited_edges + edge_list
