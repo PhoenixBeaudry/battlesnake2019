@@ -22,7 +22,7 @@ hungry = {
 }
 
 nothungry = {
-	'food_function' : const_zero,
+	'food_function' : poly_decay(100, 3),
 	'enemy_function' : poly_decay(100, 3),
 	'self_function' : self_function
 }
