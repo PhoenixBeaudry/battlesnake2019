@@ -81,6 +81,25 @@ def generate_graph(strategy, gameboard):
 #
 #NOTE: if polarity does not match weight, this function will fail and return
 #       immediately
+
+
+def edges_of_depth_distance(board, start_node, depth):
+    nodebunch = [start_node]
+    if(depth == 1):
+        return nx.edges(board, nbunch=nodebunch)
+    else:
+        for i in range(1, depth):
+            newbunch = []
+            for node in nodebunch:
+                for nbr in board[node]:
+                    if nbr not in nodebunch:
+                        newbunch.append(nbr)
+            nodebunch = nodebunch + newbunch
+
+        return nx.edges(board, nbunch=nodebunch)
+
+
+
 def enhance_new(board, start_node, func, myself=False):
     visited_edges = []
     def recursive_enhance(b, w, d, s, f):
