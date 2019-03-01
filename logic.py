@@ -75,13 +75,6 @@ def generate_graph(strategy, gameboard):
 
     return board
 
-#
-#polarity is 1 or -1, to define whether the cell to be enhanced
-#is at the apex of a topographical hill (1) or the bottom of a valley (-1)
-#
-#NOTE: if polarity does not match weight, this function will fail and return
-#       immediately
-
 
 def edges_of_depth_distance(board, start_node, depth):
     nodebunch = [start_node]
@@ -98,7 +91,6 @@ def edges_of_depth_distance(board, start_node, depth):
 
         return nx.edges(board, nbunch=nodebunch)
 
-
 def spread_influence(board, start_node, func, depth=8):
     visited_edges = []
     for radius in range(1, depth+1):
@@ -107,7 +99,6 @@ def spread_influence(board, start_node, func, depth=8):
         for edge in currentedges:
             board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(radius)
         visited_edges = visited_edges + currentedges
-
 
 def populateGraph(board):
     for edge in board.edges:

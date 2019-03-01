@@ -6,44 +6,49 @@ def populateGraph(board):
     for edge in board.edges:
         board[edge[0]][edge[1]]['weight'] = 0
 
-#
-#polarity is 1 or -1, to define whether the cell to be enhanced
-#is at the apex of a topographical hill (1) or the bottom of a valley (-1)
-#
-#NOTE: if polarity does not match weight, this function will fail and return
-#		immediately
-def enhance_new(board, start_node, func, myself=False):
-	visited_edges = []
-	def recursive_enhance(b, w, d, s, f):
-		if w == 0: return
-		ns = [] #node list
-		es = [] #edge list
-		for e in b.edges(nbunch=s):
-			es.append(e)
-		for n1,n2 in es:
-			n2x,n2y = n2
-			sx,sy = start_node
-			if (n1,n2) not in visited_edges and (n2,n1) not in visited_edges and (abs(n2x-sx)+abs(n2y-sy))==d:
-				b.adj[n1][n2]['weight'] = b.adj[n1][n2]['weight'] + w
-				visited_edges.append((n1,n2))
-			ns.append(n2)
-		if not myself:
-			for n in ns:
-				recursive_enhance(b, f(d), d+1, n, f)
-	recursive_enhance(board, func(0), 1, start_node, func)
+def edges_of_depth_distance(board, start_node, depth):
+    nodebunch = [start_node]
+    if(depth == 1):
+        return nx.edges(board, nbunch=nodebunch)
+    else:
+        for i in range(1, depth):
+            newbunch = []
+            for node in nodebunch:
+                for nbr in board[node]:
+                    if nbr not in nodebunch:
+                        newbunch.append(nbr)
+            nodebunch = nodebunch + newbunch
+
+        return nx.edges(board, nbunch=nodebunch)
+
+def enhance(board, start_node, func, myself=False):
+    weight = func(0)
+    depth = 1
+    while weight > 0:
+        edges_at_depth = edges_of_depth_distance(board, start_node, depth)
+        for edge in edges_at_depth:
+            board.adj[edge[0]][edge[1]]['weight'] = b.adj[n1][n2]['weight'] + weight
+        weight=func(depth)
+        depth = depth + 1
 
 size = 5
 graph = nx.grid_2d_graph(size, size)
 populateGraph(graph)
-#return a function that linearly increments the weight
+
 def linear_decay(weight, inc):
 	return lambda depth : (weight - depth*inc) if (weight - depth*inc) > 0 else 0
 
 #return a function that increments the weight polynomially
-def poly_decay(weight, poly, sign=1):
-    return lambda depth: weight + (-1*sign)*poly**depth
+def poly_decay(weight, poly):
+	if weight>0:
+		return lambda depth: (weight - depth**poly) if (weight - depth**poly) > 0 else 0
+	else:
+		return lambda depth: (weight + depth**poly) if (weight - depth**poly) < 0 else 0
 
-enhance_new(graph, (2,2), linear_decay(5,3), myself=True)
+def self_function():
+	return 1000000
+
+enhance(graph, (2,2), poly_decay(5,2))
 
 edges = []
 
@@ -84,7 +89,7 @@ for i in xrange(size*2 - 1):
 			wi = wi + 1
 	print(pl)
 
-
 print("adjacency list: ")
 for n, nbrs in graph.adj.items():
 	print(str(n) + " -> " + str(nbrs))
+
