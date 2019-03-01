@@ -79,6 +79,7 @@ def generate_graph(strategy, gameboard):
     if(len(gameboard.myself) > 1):
         for bodypart in gameboard.myself[:-1]:
             enhance(board, bodypart, strategy['self_function'], myself=True)
+        enhance(board, gameboard.myself[-1], strategy['tail_function'], myself=True)
     else:
         for bodypart in gameboard.myself:
             enhance(board, bodypart, strategy['self_function'], myself=True)

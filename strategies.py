@@ -21,6 +21,9 @@ def enemy_decay(depth, weight=100, poly=3):
 def self_function(depth):
 	return 1000000
 
+def tail_function(depth):
+	return 999995
+
 def const_zero(depth):
 	return 0
 
@@ -28,11 +31,13 @@ def const_zero(depth):
 hungry = {
 	'food_function' : poly_decay(-200, 3),
 	'enemy_function' : enemy_decay,
-	'self_function' : self_function
+	'self_function' : self_function,
+	'tail_function' : tail_function
 }
 
 nothungry = {
 	'food_function' : poly_decay(100, 3),
 	'enemy_function' : enemy_decay,
-	'self_function' : self_function
+	'self_function' : self_function,
+	'tail_function' : tail_function
 }
