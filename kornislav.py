@@ -60,7 +60,7 @@ def test():
 """Server is requesting a Move"""
 @app.post('/move')
 def move():
-    
+
     # Recieve JSON data
     try:
         data = bottle.request.json
@@ -100,5 +100,4 @@ def end():
     return bottle.HTTPResponse(status=200)
 
 # Start Kornislav
-run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-
+run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
