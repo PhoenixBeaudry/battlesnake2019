@@ -12,13 +12,10 @@ def populateGraph(board):
 #
 #NOTE: if polarity does not match weight, this function will fail and return
 #		immediately
-def enhance_new(board, start_node, func, polarity=1):
+def enhance_new(board, start_node, func, myself=False):
 	visited_edges = []
 	def recursive_enhance(b, w, d, s, f):
-		if polarity > 0:
-			if w <= 0: return
-		else:
-			if w >= 0: return
+		if w == 0: return
 		ns = [] #node list
 		es = [] #edge list
 		for e in b.edges(nbunch=s):
@@ -30,8 +27,9 @@ def enhance_new(board, start_node, func, polarity=1):
 				b.adj[n1][n2]['weight'] = b.adj[n1][n2]['weight'] + w
 				visited_edges.append((n1,n2))
 			ns.append(n2)
-		for n in ns:
-			recursive_enhance(b, f(d), d+1, n, f)
+		if not myself:
+			for n in ns:
+				recursive_enhance(b, f(d), d+1, n, f)
 	recursive_enhance(board, func(0), 1, start_node, func)
 
 size = 5
@@ -39,13 +37,13 @@ graph = nx.grid_2d_graph(size, size)
 populateGraph(graph)
 #return a function that linearly increments the weight
 def linear_decay(weight, inc):
-	return lambda depth : weight - depth*inc
+	return lambda depth : (weight - depth*inc) if (weight - depth*inc) > 0 else 0
 
 #return a function that increments the weight polynomially
 def poly_decay(weight, poly, sign=1):
     return lambda depth: weight + (-1*sign)*poly**depth
 
-enhance_new(graph, (2,2), linear_decay(5,1))
+enhance_new(graph, (2,2), linear_decay(5,3), myself=True)
 
 edges = []
 
