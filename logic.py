@@ -195,7 +195,8 @@ def safe_in_steps(gameboard, strategy, move, steps):
     newgraph = generate_graph(strategy, newgameboard)
 
     # Determine if lightest edge is below threshold
-    if(lightest_adjacent_edge(newgameboard, newgraph) < 1500000):
+    edge = lightest_adjacent_edge(newgameboard, newgraph)
+    if(newgraph[edge[0]][edge[1]]['weight'] < 1500000):
         # Move is safe!
         return safe_in_steps(newgameboard, strategy, lightest_adjacent_edge(newgameboard, newgraph), steps-1)
     else:
