@@ -2,6 +2,7 @@ import networkx as nx
 from strategies import *
 
 import bottle
+import copy
 
 # Board:
 # Holds basic board information about size, food, and enemy snakes
@@ -109,15 +110,13 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedge = edge
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
-            print("Found a safe edge: ", lightestedge)
             return lightestedge
         else:
             if(len(currentedges) == 0):
                 # Were dead anyway
-                print("Options Exhausted, Goodbye")
                 return lightest_adjacent_edge(gameboard, board_graph)
-            print("Dead if we try take: ", edge)
             currentedges.remove(edge)
+            lightestedgeweight = 10000000
     
 
 
@@ -188,8 +187,9 @@ def populate_graph(board):
 def safe_in_steps(gameboard, strategy, move, steps):
     if(steps <= 0):
         return True
+
     # New pseudo board
-    newgameboard = gameboard
+    newgameboard = copy.deepcopy(gameboard)
     # Determine location of new head node
     if newgameboard.myself[0] == move[0]:
         movenode = move[1]
@@ -197,6 +197,7 @@ def safe_in_steps(gameboard, strategy, move, steps):
         movenode = move[0]
 
     #Move our position as if we moved there
+
     newgameboard.myself.insert(0, movenode)
     del newgameboard.myself[-1]
 
@@ -207,7 +208,7 @@ def safe_in_steps(gameboard, strategy, move, steps):
     edge = lightest_adjacent_edge(newgameboard, newgraph)
     if(newgraph[edge[0]][edge[1]]['weight'] < 1500000):
         # Move is safe!
-        return safe_in_steps(newgameboard, strategy, lightest_adjacent_edge(newgameboard, newgraph), steps-1)
+        return safe_in_steps(newgameboard, strategy, edge, steps-1)
     else:
         return False
 
