@@ -10,12 +10,14 @@ class Board:
     food = None
     enemies = None
     myself = None
+    myhealth = 0
     def __init__(self, data):
         
         self.food = []
         snake_body = []
         self.enemies = []
         self.myself = []
+        self.myhealth = data['you']['health']
 
         #gets the size of board
         self.size = data['board']['width']
@@ -93,6 +95,7 @@ def lightest_adjacent_edge(gameboard, board_graph):
         if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
             lightestedge = edge
             lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+    return lightestedge
 
 
 # edges_of_depth_distance:
