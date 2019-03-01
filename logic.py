@@ -97,7 +97,7 @@ def enhance(board, start_node, func, myself=False):
     while weight > 0:
         edges_at_depth = edges_of_depth_distance(board, start_node, depth)
         for edge in edges_at_depth:
-            board.adj[edge[0]][edge[1]]['weight'] = b.adj[n1][n2]['weight'] + weight
+            board.adj[edge[0]][edge[1]]['weight'] = board.adj[edge[0]][edge[1]]['weight'] + weight
         weight=func(depth)
         depth = depth + 1
 
