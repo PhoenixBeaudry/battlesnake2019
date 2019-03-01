@@ -64,14 +64,14 @@ def generate_graph(strategy, gameboard):
     populateGraph(board)
 
     for bodypart in gameboard.myself:
-        enhance_new(board, bodypart, strategy['self_function'], myself=True)
+        spread_influence(board, bodypart, strategy['self_function'], 1)
 
     for food in gameboard.food:
-        enhance_new(board, food, strategy['food_function'])
+        spread_influence(board, food, strategy['food_function'])
 
     for enemy in gameboard.enemies:
         for enemypart in enemy:
-            enhance_new(board, enemypart, strategy['enemy_function'])
+            spread_influence(board, enemypart, strategy['enemy_function'])
 
     return board
 
@@ -99,26 +99,15 @@ def edges_of_depth_distance(board, start_node, depth):
         return nx.edges(board, nbunch=nodebunch)
 
 
-
-def enhance_new(board, start_node, func, myself=False):
+def spread_influence(board, start_node, func, depth=8):
     visited_edges = []
-    def recursive_enhance(b, w, d, s, f):
-        if w == 0: return
-        ns = [] #node list
-        es = [] #edge list
-        for e in b.edges(nbunch=s):
-            es.append(e)
-        for n1,n2 in es:
-            n2x,n2y = n2
-            sx,sy = start_node
-            if (n1,n2) not in visited_edges and (n2,n1) not in visited_edges and (abs(n2x-sx)+abs(n2y-sy))==d:
-                b.adj[n1][n2]['weight'] = b.adj[n1][n2]['weight'] + w
-                visited_edges.append((n1,n2))
-            ns.append(n2)
-        if not myself:
-            for n in ns:
-                recursive_enhance(b, f(d), d+1, n, f)
-    recursive_enhance(board, func(0), 1, start_node, func)
+    for radius in range(1, depth+1):
+        currentedges = edges_of_depth_distance(board, start_node, radius)
+        currentedges = list(set(currentedges) - set(visited_edges))
+        for edge in currentedges:
+            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(radius)
+        visited_edges = visited_edges + currentedges
+
 
 def populateGraph(board):
     for edge in board.edges:
