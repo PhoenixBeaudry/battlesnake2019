@@ -12,7 +12,7 @@ app = Bottle()
 
 debug = True
 
-turncount = 0
+turncount = 1
 
 """Root Response"""
 @app.route('/')
@@ -26,7 +26,7 @@ def start():
 
     # Reset turn count at start of new game
     global turncount
-    turncount = 0
+    turncount = 1
 
     # Receive JSON data
     try:
@@ -82,7 +82,7 @@ def move():
 
 
     # Hungry/NotHungry Meta Strategy Implementation
-    if(gameboard.myhealth < 20):
+    if(gameboard.myhealth < 40):
         chosen_strategy = hungry
     else:
         chosen_strategy = nothungry
