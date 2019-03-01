@@ -76,8 +76,12 @@ def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
     populate_graph(board)
 
-    for bodypart in gameboard.myself:
-        enhance(board, bodypart, strategy['self_function'], myself=True)
+    if(len(gameboard.myself > 1)):
+        for bodypart in gameboard.myself[:-1]:
+            enhance(board, bodypart, strategy['self_function'], myself=True)
+    else:
+        for bodypart in gameboard.myself:
+            enhance(board, bodypart, strategy['self_function'], myself=True)
 
     for food in gameboard.food:
         enhance(board, food, strategy['food_function'])
