@@ -12,7 +12,7 @@ app = Bottle()
 
 debug = True
 
-turncount = 1
+turncount = 0
 
 """Root Response"""
 @app.route('/')
@@ -26,7 +26,7 @@ def start():
 
     # Reset turn count at start of new game
     global turncount
-    turncount = 1
+    turncount = 0
 
     # Receive JSON data
     try:
@@ -77,9 +77,18 @@ def move():
             print(data)
 
 
-    # Generate the board graph and populate its edges
+    # Generate the board data
     gameboard = Board(data)
-    board_graph = generate_graph(strat_one, gameboard)
+
+
+    # Hungry/NotHungry Meta Strategy Implementation
+    if(gameboard.myhealth < 20):
+        chosen_strategy = hungry
+    else:
+        chosen_strategy = nothungry
+
+    # Populate edges according to current strategy
+    board_graph = generate_graph(chosen_strategy, gameboard)
 
     # Select the lightest adjacent edge and move in that direction
     selected_move = next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, board_graph))

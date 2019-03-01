@@ -11,9 +11,18 @@ def poly_decay(weight, poly):
 def self_function(depth):
 	return 1000000
 
+def const_zero(depth):
+	return 0
+
 #Strategies:
-strat_one = {
-	'food_function' : poly_decay(-100, 3),
+hungry = {
+	'food_function' : poly_decay(-200, 3),
+	'enemy_function' : poly_decay(100, 3),
+	'self_function' : self_function
+}
+
+nothungry = {
+	'food_function' : const_zero,
 	'enemy_function' : poly_decay(100, 3),
 	'self_function' : self_function
 }
