@@ -95,7 +95,7 @@ def enhance(board, start_node, func, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []
-    while weight > 0:
+    while weight != 0:
         currentedges = edges_of_depth_distance(board, start_node, depth)
         currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
