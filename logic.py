@@ -9,10 +9,6 @@ class Board:
     enemies = None
     myself = None
     def __init__(self, data):
-        try:
-            data = bottle.request.json
-        except:
-            raise ValueError 
         
         self.food = []
         snake_body = []
