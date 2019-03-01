@@ -3,6 +3,8 @@ from strategies import *
 
 import bottle
 
+# Board:
+# Holds basic board information about size, food, and enemy snakes
 class Board:
     size = 0
     food = None
@@ -39,7 +41,11 @@ class Board:
             x = body['x']
             y = body['y']
             self.myself.append((x,y))
-        
+
+
+# next_direction:
+# Given an edge incident to our snake_head node it returns 
+# the direction in which to move to travel that edge        
 def next_direction(snake_head, input_destination):
 
     if snake_head == input_destination[0]:
@@ -56,12 +62,14 @@ def next_direction(snake_head, input_destination):
     if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
         return "left"
 
-def dummygraph():
-    return nx.grid_2d_graph(10, 10)
-    
+
+# generate_graph:
+# When passed the current gameboard information and a
+# particular strategy dictionary it populates the graph
+# with the desired edges weights
 def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
-    populateGraph(board)
+    populate_graph(board)
 
     for bodypart in gameboard.myself:
         enhance(board, bodypart, strategy['self_function'], myself=True)
@@ -76,6 +84,20 @@ def generate_graph(strategy, gameboard):
     return board
 
 
+# lightest_adjacent_edge:
+# Returns the edge with the lightest weight adjacent to our head node
+def lightest_adjacent_edge(gameboard, board_graph):
+    lightestedgeweight = 10000000
+    lightestedge = None
+    for edge in nx.edges(board_graph, gameboard.myself[0]):
+        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+            lightestedge = edge
+            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+
+
+# edges_of_depth_distance:
+# Returns all edges that are within a given depth
+# radius from a particular start node
 def edges_of_depth_distance(board, start_node, depth):
     nodebunch = [start_node]
     if(depth == 1):
@@ -91,6 +113,11 @@ def edges_of_depth_distance(board, start_node, depth):
 
         return nx.edges(board, nbunch=nodebunch)
 
+
+# enhance:
+# Given a starting node and an influence function of depth
+# enhance spreads that nodes influence radially through all edges
+# with a dropoff according to func(depth)
 def enhance(board, start_node, func, myself=False):
     weight = func(0)
     depth = 1
@@ -106,6 +133,9 @@ def enhance(board, start_node, func, myself=False):
         visited_edges = visited_edges + currentedges
         depth = depth + 1
 
-def populateGraph(board):
+
+# populate_graph:
+# Gives all edges in n*n board graph a default weight
+def populate_graph(board):
     for edge in board.edges:
         board[edge[0]][edge[1]]['weight'] = 0

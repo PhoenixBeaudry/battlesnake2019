@@ -8,6 +8,9 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+# Data to be fed into the graph generator
+# this can be changed to determine Kornislavs
+# behaviour in certain conditions
 testdata = {
   "game": {
     "id": "game-id-string"
@@ -86,21 +89,3 @@ nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 plt.axis('off')
 plt.gca().invert_yaxis()
 plt.savefig("test")
-
-
-
-"""
-testdepth = 5
-
-graph = dummygraph()
-pos = {}
-for node in graph:
-	pos[node] = node
-nx.draw_networkx(graph, pos, font_size=7)
-
-nx.draw_networkx_edges(graph, pos, edgelist=edges_of_depth_distance(graph, (4,4), testdepth), edge_color='blue', width=5)
-
-plt.axis('off')
-plt.gca().invert_yaxis()
-plt.savefig("test")
-"""

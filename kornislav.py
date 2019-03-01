@@ -10,7 +10,9 @@ from logic import *
 from strategies import *
 app = Bottle()
 
+debug = True
 
+turncount = 1
 
 """Root Response"""
 @app.route('/')
@@ -18,15 +20,20 @@ def hello():
     return "Hello, World!"
 
 
-
 """Signals Game Start"""
 @app.post('/start')
 def start():
+
+    # Reset turn count at start of new game
+    turncount = 1
+
+    # Receive JSON data
     try:
         data = bottle.request.json
     except:
         raise ValueError 
 
+    # Respond with Kornislavs Appearance
     val = {"color": "#ff00ff", "headType": "bendr", "tailType": "pixel"}
 
     response.content_type = 'application/json'
@@ -40,7 +47,8 @@ def ping():
     return bottle.HTTPResponse(status=200)
 
 
-
+"""Local Testing Method"""
+""" Responds to POST requests to the /test route """
 @app.post('/test')
 def test():
     newgraph = dummygraph()
@@ -49,32 +57,37 @@ def test():
     return bottle.HTTPResponse(status=200)
 
 
-
-
-
 """Server is requesting a Move"""
 @app.post('/move')
 def move():
-    directions = ['up', 'down', 'left', 'right']
+
+    # Recieve JSON data
     try:
         data = bottle.request.json
     except:
-        raise ValueError 
+        raise ValueError
 
+    # If we are in debugging mode, every 100 turns
+    # Kornislav will output the current gameboard state data
+    # which can then be used in tester.py to determine his thinking
+    if(debug):
+        if(turncount%100 == 0):
+            print(data)
+
+
+    # Generate the board graph and populate its edges
     gameboard = Board(data)
-
     board_graph = generate_graph(strat_one, gameboard)
 
-    lightestedgeweight = 10000000
-    lightestedge = None
-    for edge in nx.edges(board_graph, gameboard.myself[0]):
-        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
-            lightestedge = edge
-            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+    # Select the lightest adjacent edge and move in that direction
+    selected_move = next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, board_graph))
+    
+    # Move to next turn
+    turncount = turncount + 1
 
-    val = {"move": next_direction(gameboard.myself[0], lightestedge)}
+    #Respond with our move decision
+    val = {"move": selected_move}
     response.content_type = 'application/json'
-
     return dumps(val)
 
 
@@ -84,12 +97,9 @@ def end():
     return bottle.HTTPResponse(status=200)
 
 
-
-run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-
-'''
+# If app is running on Heroku start on port 5000
+# else run on port 25565
 if os.environ.get('APP_LOCATION') == 'heroku':
     run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
 else:
     run(host='192.169.1.100', port=25565, debug=True)
-'''
