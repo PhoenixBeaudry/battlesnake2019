@@ -95,22 +95,25 @@ def generate_graph(strategy, gameboard):
 def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedgeweight = 10000000
     lightestedge = None
+    prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
     while(True):
         for edge in currentedges:
             if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+                prevedge = lightestedge
                 lightestedge = edge
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
-            break
+            print("Found a safe edge: ", lightestedge)
+            return lightestedge
         else:
             if(len(currentedges) == 0):
                 # Were dead anyway
-                print("I RECOGNIZE WE ARE VERY DEAD")
+                print("Options Exhausted, Goodbye")
                 return lightest_adjacent_edge(gameboard, board_graph)
+            print("Dead if we try take: ", edge)
             currentedges.remove(edge)
-
-    return lightestedge
+    
 
 
 #Returns lightest edge
