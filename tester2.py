@@ -15,6 +15,7 @@ def populateGraph(board):
 def enhance_new(board, start_node, func, myself=False):
 	visited_edges = []
 	def recursive_enhance(b, w, d, s, f):
+		print "w = " + str(w)
 		if w == 0: return
 		ns = [] #node list
 		es = [] #edge list
@@ -32,18 +33,24 @@ def enhance_new(board, start_node, func, myself=False):
 				recursive_enhance(b, f(d), d+1, n, f)
 	recursive_enhance(board, func(0), 1, start_node, func)
 
-size = 5
+size = 15
 graph = nx.grid_2d_graph(size, size)
 populateGraph(graph)
-#return a function that linearly increments the weight
+
 def linear_decay(weight, inc):
 	return lambda depth : (weight - depth*inc) if (weight - depth*inc) > 0 else 0
 
 #return a function that increments the weight polynomially
-def poly_decay(weight, poly, sign=1):
-    return lambda depth: weight + (-1*sign)*poly**depth
+def poly_decay(weight, poly):
+	if weight>0:
+		return lambda depth: (weight - depth**poly) if (weight - depth**poly) > 0 else 0
+	else:
+		return lambda depth: (weight + depth**poly) if (weight - depth**poly) < 0 else 0
 
-enhance_new(graph, (2,2), linear_decay(5,3), myself=True)
+def self_function():
+	return 1000000
+
+enhance_new(graph, (2,2), poly_decay(100,3))
 
 edges = []
 
@@ -84,7 +91,8 @@ for i in xrange(size*2 - 1):
 			wi = wi + 1
 	print pl
 
-
+'''
 print "adjacency list: "
 for n, nbrs in graph.adj.items():
 	print str(n) + " -> " + str(nbrs)
+	'''

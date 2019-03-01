@@ -75,12 +75,6 @@ def generate_graph(strategy, gameboard):
 
     return board
 
-#
-#polarity is 1 or -1, to define whether the cell to be enhanced
-#is at the apex of a topographical hill (1) or the bottom of a valley (-1)
-#
-#NOTE: if polarity does not match weight, this function will fail and return
-#       immediately
 def enhance_new(board, start_node, func, myself=False):
     visited_edges = []
     def recursive_enhance(b, w, d, s, f):
