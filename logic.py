@@ -106,7 +106,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
         else:
             if(len(currentedges) == 0):
                 # Were dead anyway
-                return lightestedge
+                return lightest_adjacent_edge(gameboard, board_graph)
             currentedges.remove(lightestedge)
 
     return lightestedge

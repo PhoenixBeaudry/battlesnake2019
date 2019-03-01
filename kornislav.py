@@ -73,7 +73,7 @@ def move():
     # which can then be used in tester.py to determine his thinking
     global turncount
     if(debug):
-        if(turncount%100 == 0):
+            print("Turn: ", turncount)
             print(data)
 
 
@@ -112,4 +112,7 @@ def end():
     return bottle.HTTPResponse(status=200)
 
 # Start Kornislav
-run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+if os.environ.get('APP_LOCATION') == 'heroku':
+    run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+else:
+    run(app, host="192.168.1.100", port=int(os.environ.get("PORT", 25565)))
