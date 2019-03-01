@@ -64,37 +64,42 @@ def generate_graph(strategy, gameboard):
     populateGraph(board)
 
     for bodypart in gameboard.myself:
-        enhance_cell(board, bodypart, strategy['self_function'], myself=True)
+        enhance_new(board, bodypart, strategy['self_function'], myself=True)
 
     for food in gameboard.food:
-        enhance_cell(board, food, strategy['food_function'])
+        enhance_new(board, food, strategy['food_function'])
 
     for enemy in gameboard.enemies:
         for enemypart in enemy:
-            enhance_cell(board, enemypart, strategy['enemy_function'])
-
-    
+            enhance_new(board, enemypart, strategy['enemy_function'])
 
     return board
 
-def enhance_cell(board, start_node, func, myself=False):
+#
+#polarity is 1 or -1, to define whether the cell to be enhanced
+#is at the apex of a topographical hill (1) or the bottom of a valley (-1)
+#
+#NOTE: if polarity does not match weight, this function will fail and return
+#       immediately
+def enhance_new(board, start_node, func, myself=False):
     visited_edges = []
-    if(myself):
-        edge_list = list(nx.bfs_edges(board, start_node, depth_limit=1))
-        edge_list = list(set(edge_list) - set(visited_edges))
-        for edge in edge_list:
-            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func()
-        visited_edges = visited_edges + edge_list
-    else:
-        for depth in range(1, len(board)):
-            edge_list = list(nx.bfs_edges(board, start_node, depth_limit = depth))
-            edge_list = list(set(edge_list) - set(visited_edges))
-            for edge in edge_list:
-                board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(depth)
-            if(visited_edges == visited_edges + edge_list):
-                break
-            visited_edges = visited_edges + edge_list
-
+    def recursive_enhance(b, w, d, s, f):
+        if w == 0: return
+        ns = [] #node list
+        es = [] #edge list
+        for e in b.edges(nbunch=s):
+            es.append(e)
+        for n1,n2 in es:
+            n2x,n2y = n2
+            sx,sy = start_node
+            if (n1,n2) not in visited_edges and (n2,n1) not in visited_edges and (abs(n2x-sx)+abs(n2y-sy))==d:
+                b.adj[n1][n2]['weight'] = b.adj[n1][n2]['weight'] + w
+                visited_edges.append((n1,n2))
+            ns.append(n2)
+        if not myself:
+            for n in ns:
+                recursive_enhance(b, f(d), d+1, n, f)
+    recursive_enhance(board, func(0), 1, start_node, func)
 
 def populateGraph(board):
     for edge in board.edges:
