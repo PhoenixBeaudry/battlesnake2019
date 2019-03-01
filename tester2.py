@@ -24,7 +24,9 @@ def enhance_new(board, start_node, func, polarity=1):
 		for e in b.edges(nbunch=s):
 			es.append(e)
 		for n1,n2 in es:
-			if (n1,n2) not in visited_edges and (n2,n1) not in visited_edges:
+			n2x,n2y = n2
+			sx,sy = start_node
+			if (n1,n2) not in visited_edges and (n2,n1) not in visited_edges and (abs(n2x-sx)+abs(n2y-sy))==d:
 				b.adj[n1][n2]['weight'] = b.adj[n1][n2]['weight'] + w
 				visited_edges.append((n1,n2))
 			ns.append(n2)
@@ -43,7 +45,7 @@ def linear_decay(weight, inc):
 def poly_decay(weight, poly, sign=1):
     return lambda depth: weight + (-1*sign)*poly**depth
 
-enhance_new(graph, (2,2), linear_decay(5,2))
+enhance_new(graph, (2,2), linear_decay(5,1))
 
 edges = []
 
