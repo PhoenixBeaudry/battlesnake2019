@@ -96,10 +96,6 @@ def move():
 def end():
     return bottle.HTTPResponse(status=200)
 
+# Start Kornislav
+run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
-# If app is running on Heroku start on port 5000
-# else run on port 25565
-if os.environ.get('APP_LOCATION') == 'heroku':
-    run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
-else:
-    run(host='192.169.1.100', port=25565, debug=True)
