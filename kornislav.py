@@ -25,6 +25,7 @@ def hello():
 def start():
 
     # Reset turn count at start of new game
+    global turncount
     turncount = 1
 
     # Receive JSON data
