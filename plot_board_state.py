@@ -57,6 +57,8 @@ testdata = {
 gameboard = Board(testdata)
 graph = generate_graph(strat_one, gameboard)
 
+print("Kornislav decided to go: ", next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, graph)))
+
 #Setup plot
 plt.figure(figsize=(15,15))
 pos = {}

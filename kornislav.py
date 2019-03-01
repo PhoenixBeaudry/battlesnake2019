@@ -60,7 +60,7 @@ def test():
 """Server is requesting a Move"""
 @app.post('/move')
 def move():
-
+    
     # Recieve JSON data
     try:
         data = bottle.request.json
@@ -71,11 +71,12 @@ def move():
     # Kornislav will output the current gameboard state data
     # which can then be used in tester.py to determine his thinking
     if(debug):
+        print(data)
         '''
         if(turncount%100 == 0):
             print(data)
         '''
-        print(data)
+
 
     # Generate the board graph and populate its edges
     gameboard = Board(data)
