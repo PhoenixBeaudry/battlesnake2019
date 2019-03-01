@@ -70,6 +70,7 @@ def move():
     # If we are in debugging mode, every 100 turns
     # Kornislav will output the current gameboard state data
     # which can then be used in tester.py to determine his thinking
+    global turncount
     if(debug):
         if(turncount%100 == 0):
             print(data)
