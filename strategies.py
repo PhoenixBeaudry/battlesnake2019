@@ -8,7 +8,7 @@ def poly_decay(weight, poly):
 	else:
 		return lambda depth: (weight + depth**poly) if (weight - depth**poly) < 0 else 0
 
-def self_function():
+def self_function(depth):
 	return 1000000
 
 #Strategies:
