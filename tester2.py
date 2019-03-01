@@ -24,11 +24,12 @@ def edges_of_depth_distance(board, start_node, depth):
 def enhance(board, start_node, func, myself=False):
     weight = func(0)
     depth = 1
+    visited_edges = []
     while weight > 0:
         edges_at_depth = edges_of_depth_distance(board, start_node, depth)
         for edge in edges_at_depth:
-            board.adj[edge[0]][edge[1]]['weight'] = b.adj[n1][n2]['weight'] + weight
-        weight=func(depth)
+            board.adj[edge[0]][edge[1]]['weight'] = board.adj[edge[0]][edge[1]]['weight'] + weight
+        weight = func(depth)
         depth = depth + 1
 
 size = 5
@@ -48,7 +49,7 @@ def poly_decay(weight, poly):
 def self_function():
 	return 1000000
 
-enhance(graph, (2,2), poly_decay(5,2))
+enhance(graph, (2,2), linear_decay(5,2))
 
 edges = []
 
