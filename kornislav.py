@@ -35,7 +35,7 @@ def start():
         raise ValueError 
 
     # Respond with Kornislavs Appearance
-    val = {"color": "#ff00ff", "headType": "bendr", "tailType": "pixel"}
+    val = {"color": "#ff00ff", "headType": "evil", "tailType": "bolt"}
 
     response.content_type = 'application/json'
     

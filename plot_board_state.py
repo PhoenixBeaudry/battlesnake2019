@@ -40,6 +40,21 @@ testdata = {
             "y": 3
           }
         ]
+      },
+      {
+        "id": "othersnake",
+        "name": "Emeny",
+        "health": 90,
+        "body": [
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 5,
+            "y": 4
+          }
+        ]
       }
     ]
   },
@@ -59,7 +74,7 @@ testdata = {
 
 #Setup board state
 gameboard = Board(testdata)
-graph = generate_graph(strat_one, gameboard)
+graph = generate_graph(nothungry, gameboard)
 
 print("Kornislav decided to go: ", next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, graph)))
 

@@ -145,3 +145,10 @@ def enhance(board, start_node, func, myself=False):
 def populate_graph(board):
     for edge in board.edges:
         board[edge[0]][edge[1]]['weight'] = 0
+
+
+
+# see_into_future:
+# After we choose a move, pretend we moved that square and run algorithm
+# again. Repeat n times. If at any point were in a situation where we have
+# no valid moves, we must have entered an area we could not have left
