@@ -6,10 +6,19 @@ def populateGraph(board):
     for edge in board.edges:
         board[edge[0]][edge[1]]['weight'] = 0
 
-def enhance_new(board, weight, increment, start_node, func):
+#
+#polarity is 1 or -1, to define whether the cell to be enhanced
+#is at the apex of a topographical hill (1) or the bottom of a valley (-1)
+#
+#NOTE: if polarity does not match weight, this function will fail and return
+#		immediately
+def enhance_new(board, start_node, func, polarity=1):
 	visited_edges = []
-	def recursive_enhance(b, w, i, s, f):
-		if w <= 0: return
+	def recursive_enhance(b, w, d, s, f):
+		if polarity > 0:
+			if w <= 0: return
+		else:
+			if w >= 0: return
 		ns = [] #node list
 		es = [] #edge list
 		for e in b.edges(nbunch=s):
@@ -20,15 +29,21 @@ def enhance_new(board, weight, increment, start_node, func):
 				visited_edges.append((n1,n2))
 			ns.append(n2)
 		for n in ns:
-			recursive_enhance(b, f(w,i), i, n, f)
-	recursive_enhance(board, weight, increment, start_node, func)
+			recursive_enhance(b, f(d), d+1, n, f)
+	recursive_enhance(board, func(0), 1, start_node, func)
 
 size = 5
 graph = nx.grid_2d_graph(size, size)
 populateGraph(graph)
-#linear increment function
-f = lambda w,i : w + i
-enhance_new(graph, 5, -2, (2,2), f)
+#return a function that linearly increments the weight
+def linear_decay(weight, inc):
+	return lambda depth : weight - depth*inc
+
+#return a function that increments the weight polynomially
+def poly_decay(weight, poly, sign=1):
+    return lambda depth: weight + (-1*sign)*poly**depth
+
+enhance_new(graph, (2,2), linear_decay(5,2))
 
 edges = []
 
