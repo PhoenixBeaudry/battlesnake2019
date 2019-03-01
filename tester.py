@@ -83,15 +83,6 @@ for edge in graph.edges:
 
 nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 
-# Testing bfs
-nodecenter = (4, 9)
-bfsdepth = 3
-nx.draw_networkx_nodes(graph, pos, nodelist=[nodecenter], node_color='yellow')
-nx.draw_networkx_edges(graph, pos, edgelist=list(nx.bfs_edges(graph, nodecenter, depth_limit=bfsdepth)), edge_color='blue', width=5)
-
-
-
-
 plt.axis('off')
 plt.gca().invert_yaxis()
 plt.savefig("test")
