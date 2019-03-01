@@ -76,7 +76,7 @@ def generate_graph(strategy, gameboard):
     board = nx.grid_2d_graph(gameboard.size, gameboard.size)
     populate_graph(board)
 
-    if(len(gameboard.myself > 1)):
+    if(len(gameboard.myself) > 1):
         for bodypart in gameboard.myself[:-1]:
             enhance(board, bodypart, strategy['self_function'], myself=True)
     else:
