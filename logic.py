@@ -44,6 +44,9 @@ class Board:
             y = body['y']
             self.myself.append((x,y))
 
+        if self.myself in self.enemies:
+            self.enemies.remove(self.myself)
+
 
 # next_direction:
 # Given an edge incident to our snake_head node it returns 

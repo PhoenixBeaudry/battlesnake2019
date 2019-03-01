@@ -23,6 +23,10 @@ testdata = {
       {
         "x": 9,
         "y": 8
+      },
+      {
+        "x": 8,
+        "y": 8
       }
     ],
     "snakes": [
@@ -32,8 +36,8 @@ testdata = {
         "health": 90,
         "body": [
           {
-            "x": 12,
-            "y": 2
+            "x": 1,
+            "y": 3
           }
         ]
       }
@@ -59,35 +63,39 @@ graph = generate_graph(strat_one, gameboard)
 
 print("Kornislav decided to go: ", next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, graph)))
 
-#Setup plot
-plt.figure(figsize=(15,15))
-pos = {}
-for node in graph:
-	pos[node] = node
-#Draw all nodes
-nx.draw_networkx(graph, pos, font_size=7)
 
-#Color food nodes
-nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
+plot = True
 
-#Color self nodes
-nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.myself, node_color='blue')
+if(plot):
+  #Setup plot
+  plt.figure(figsize=(15,15))
+  pos = {}
+  for node in graph:
+  	pos[node] = node
+  #Draw all nodes
+  nx.draw_networkx(graph, pos, font_size=7)
 
-#Color enemy nodes
-enemylist = []
-for enemy in gameboard.enemies:
-	for enemypart in enemy:
-		enemylist.append(enemypart)
+  #Color food nodes
+  nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
 
-nx.draw_networkx_nodes(graph, pos, nodelist=enemylist, node_color='black')
+  #Color self nodes
+  nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.myself, node_color='blue')
 
-edges = {}
+  #Color enemy nodes
+  enemylist = []
+  for enemy in gameboard.enemies:
+  	for enemypart in enemy:
+  		enemylist.append(enemypart)
 
-for edge in graph.edges:
-	edges[edge] = graph[edge[0]][edge[1]]['weight']
+  nx.draw_networkx_nodes(graph, pos, nodelist=enemylist, node_color='black')
 
-nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
+  edges = {}
 
-plt.axis('off')
-plt.gca().invert_yaxis()
-plt.savefig("test")
+  for edge in graph.edges:
+  	edges[edge] = graph[edge[0]][edge[1]]['weight']
+
+  nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
+
+  plt.axis('off')
+  plt.gca().invert_yaxis()
+  plt.savefig("test")
