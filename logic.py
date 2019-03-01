@@ -91,13 +91,24 @@ def generate_graph(strategy, gameboard):
 
 # lightest_adjacent_edge:
 # Returns the edge with the lightest weight adjacent to our head node
-def lightest_adjacent_edge(gameboard, board_graph):
+# that is also a safe move in 'foresight' steps
+def lightest_adjacent_edge(gameboard, board_graph, foresight, strategy):
     lightestedgeweight = 10000000
     lightestedge = None
-    for edge in nx.edges(board_graph, gameboard.myself[0]):
-        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
-            lightestedge = edge
-            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+    currentedges = nx.edges(board_graph, gameboard.myself[0])
+    while(True):
+        for edge in currentedges:
+            if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+                lightestedge = edge
+                lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+        if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+            break
+        else:
+            if(len(currentedges) == 0):
+                # Were dead anyway
+                return lightestedge
+            currentedges.remove(lightestedge)
+
     return lightestedge
 
 
@@ -150,5 +161,31 @@ def populate_graph(board):
 
 # see_into_future:
 # After we choose a move, pretend we moved that square and run algorithm
-# again. Repeat n times. If at any point were in a situation where we have
+# again. Repeat 'steps' times. If at any point were in a situation where we have
 # no valid moves, we must have entered an area we could not have left
+# Returns True on good move, False on bad
+def safe_in_steps(gameboard, strategy, move, steps):
+    if(steps <= 0):
+        return True
+    # New pseudo board
+    newgameboard = gameboard
+    # Determine location of new head node
+    if newgameboard.myself[0] == move[0]:
+        movenode = move[1]
+    else:
+        movenode = move[0]
+
+    #Move our position as if we moved there
+    newgameboard.myself.insert(0, movenode)
+    del newgameboard.myself[-1]
+
+    # Generate new graph
+    newgraph = generate_graph(strategy, newgameboard)
+
+    # Determine if lightest edge is below threshold
+    if(lightest_adjacent_edge(newgameboard, newgraph) < 1500000):
+        # Move is safe!
+        return safe_in_steps(newgameboard, strategy, lightest_adjacent_edge(newgameboard, newgraph), steps-1)
+    else:
+        return False
+

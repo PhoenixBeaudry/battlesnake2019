@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Data to be fed into the graph generator
 # this can be changed to determine Kornislavs
 # behaviour in certain conditions
-testdata = {
+defaultdata = {
   "game": {
     "id": "game-id-string"
   },
@@ -70,6 +70,11 @@ testdata = {
     ]
   }
 }
+
+testdata = defaultdata
+
+
+
 
 
 #Setup board state

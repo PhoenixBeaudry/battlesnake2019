@@ -90,9 +90,13 @@ def move():
     # Populate edges according to current strategy
     board_graph = generate_graph(chosen_strategy, gameboard)
 
+
+    # How far should we look ahead?
+    foresight = 0
+
     # Select the lightest adjacent edge and move in that direction
-    selected_move = next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, board_graph))
-    
+    selected_move = next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, board_graph, foresight, chosen_strategy))
+
     # Move to next turn
     turncount = turncount + 1
 
