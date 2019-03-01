@@ -71,17 +71,23 @@ defaultdata = {
   }
 }
 
-testdata = defaultdata
-
-
+testdata = {'game': {'id': 'f1d4600b-91ce-424b-b7b1-64505442de57'}, 'turn': 458, 'board': {'height': 7, 'width': 7, 'food': [{'x': 5, 'y': 2}, {'x': 5, 'y': 3}, {'x': 4, 'y': 3}, {'x': 3, 'y': 1}, {'x': 4, 'y': 1}, {'x': 3, 'y': 2}, {'x': 5, 'y': 1}, {'x': 4, 'y': 2}, {'x': 3, 'y': 3}], 'snakes': [{'id': 'gs_8fFRqghPjmQ3dd38TWPTCPhB', 'name': 'PhoenixBeaudry / NodeSlave', 'health': 95, 'body': [{'x': 0, 'y': 6}, {'x': 0, 'y': 5}, {'x': 0, 'y': 4}, {'x': 0, 'y': 3}, {'x': 0, 'y': 2}, {'x': 0, 'y': 1}, {'x': 0, 'y': 0}, {'x': 1, 'y': 0}, {'x': 2, 'y': 0}, {'x': 3, 'y': 0}, {'x': 4, 'y': 0}, {'x': 5, 'y': 0}, {'x': 6, 'y': 0}, {'x': 6, 'y': 1}, {'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 6, 'y': 4}, {'x': 5, 'y': 4}, {'x': 4, 'y': 4}, {'x': 3, 'y': 4}, {'x': 2, 'y': 4}, {'x': 2, 'y': 3}, {'x': 2, 'y': 2}, {'x': 2, 'y': 1}, {'x': 1, 'y': 1}, {'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}, {'x': 1, 'y': 5}, {'x': 2, 'y': 5}, {'x': 3, 'y': 5}, {'x': 4, 'y': 5}, {'x': 5, 'y': 5}, {'x': 6, 'y': 5}, {'x': 6, 'y': 6}, {'x': 5, 'y': 6}, {'x': 4, 'y': 6}, {'x': 3, 'y': 6}, {'x': 2, 'y': 6}, {'x': 1, 'y': 6}]}]}, 'you': {'id': 'gs_8fFRqghPjmQ3dd38TWPTCPhB', 'name': 'PhoenixBeaudry / NodeSlave', 'health': 95, 'body': [{'x': 0, 'y': 6}, {'x': 0, 'y': 5}, {'x': 0, 'y': 4}, {'x': 0, 'y': 3}, {'x': 0, 'y': 2}, {'x': 0, 'y': 1}, {'x': 0, 'y': 0}, {'x': 1, 'y': 0}, {'x': 2, 'y': 0}, {'x': 3, 'y': 0}, {'x': 4, 'y': 0}, {'x': 5, 'y': 0}, {'x': 6, 'y': 0}, {'x': 6, 'y': 1}, {'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 6, 'y': 4}, {'x': 5, 'y': 4}, {'x': 4, 'y': 4}, {'x': 3, 'y': 4}, {'x': 2, 'y': 4}, {'x': 2, 'y': 3}, {'x': 2, 'y': 2}, {'x': 2, 'y': 1}, {'x': 1, 'y': 1}, {'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 1, 'y': 4}, {'x': 1, 'y': 5}, {'x': 2, 'y': 5}, {'x': 3, 'y': 5}, {'x': 4, 'y': 5}, {'x': 5, 'y': 5}, {'x': 6, 'y': 5}, {'x': 6, 'y': 6}, {'x': 5, 'y': 6}, {'x': 4, 'y': 6}, {'x': 3, 'y': 6}, {'x': 2, 'y': 6}, {'x': 1, 'y': 6}]}}
 
 
 
 #Setup board state
 gameboard = Board(testdata)
+
+# Hungry/NotHungry Meta Strategy Implementation
+if(gameboard.myhealth < 40):
+    chosen_strategy = hungry
+else:
+    chosen_strategy = nothungry
+
+foresight = 2
 graph = generate_graph(nothungry, gameboard)
 
-print("Kornislav decided to go: ", next_direction(gameboard.myself[0], lightest_adjacent_edge(gameboard, graph)))
+print("Kornislav decided to go: ", next_direction(gameboard.myself[0], determine_safest_move(gameboard, graph, foresight, nothungry)))
 
 
 plot = True

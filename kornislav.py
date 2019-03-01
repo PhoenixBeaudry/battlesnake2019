@@ -113,6 +113,6 @@ def end():
 
 # Start Kornislav
 if os.environ.get('APP_LOCATION') == 'heroku':
-    run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 else:
     run(app, host="192.168.1.100", port=int(os.environ.get("PORT", 25565)))
