@@ -92,7 +92,7 @@ def generate_graph(strategy, gameboard):
 # lightest_adjacent_edge:
 # Returns the edge with the lightest weight adjacent to our head node
 # that is also a safe move in 'foresight' steps
-def lightest_adjacent_edge(gameboard, board_graph, foresight, strategy):
+def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedgeweight = 10000000
     lightestedge = None
     currentedges = nx.edges(board_graph, gameboard.myself[0])
@@ -109,6 +109,18 @@ def lightest_adjacent_edge(gameboard, board_graph, foresight, strategy):
                 return lightestedge
             currentedges.remove(lightestedge)
 
+    return lightestedge
+
+
+#Returns lightest edge
+def lightest_adjacent_edge(gameboard, board_graph):
+    lightestedgeweight = 10000000
+    lightestedge = None
+    currentedges = nx.edges(board_graph, gameboard.myself[0])
+    for edge in currentedges:
+        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+            lightestedge = edge
+            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
     return lightestedge
 
 
