@@ -95,7 +95,7 @@ def generate_graph(strategy, gameboard):
 def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedgeweight = 10000000
     lightestedge = None
-    currentedges = nx.edges(board_graph, gameboard.myself[0])
+    currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
     while(True):
         for edge in currentedges:
             if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
