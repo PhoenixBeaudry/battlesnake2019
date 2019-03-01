@@ -71,9 +71,11 @@ def move():
     # Kornislav will output the current gameboard state data
     # which can then be used in tester.py to determine his thinking
     if(debug):
+        '''
         if(turncount%100 == 0):
             print(data)
-
+        '''
+        print(data)
 
     # Generate the board graph and populate its edges
     gameboard = Board(data)
