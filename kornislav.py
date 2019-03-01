@@ -67,17 +67,12 @@ def move():
 
     lightestedgeweight = 10000000
     lightestedge = None
-    print("Snake head: ", gameboard.myself[0])
     for edge in nx.edges(board_graph, gameboard.myself[0]):
-        print("Current edge: ", edge)
-        print("Current edge weight: ", board_graph[edge[0]][edge[1]]['weight'])
         if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
             lightestedge = edge
             lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
 
-    print(lightestedge)
     val = {"move": next_direction(gameboard.myself[0], lightestedge)}
-    print(val)
     response.content_type = 'application/json'
 
     return dumps(val)
