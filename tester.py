@@ -3,6 +3,7 @@
 from logic import *
 from strategies import *
 import networkx as nx
+import sys
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -48,11 +49,10 @@ testdata = {
   }
 }
 
+
 #Setup board state
 gameboard = Board(testdata)
 graph = generate_graph(strat_one, gameboard)
-
-
 
 #Setup plot
 plt.figure(figsize=(15,15))
@@ -86,3 +86,19 @@ nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 plt.axis('off')
 plt.gca().invert_yaxis()
 plt.savefig("test")
+
+"""
+testdepth = 5
+
+graph = dummygraph()
+pos = {}
+for node in graph:
+	pos[node] = node
+nx.draw_networkx(graph, pos, font_size=7)
+
+nx.draw_networkx_edges(graph, pos, edgelist=edges_of_depth_distance(graph, (4,4), testdepth), edge_color='blue', width=5)
+
+plt.axis('off')
+plt.gca().invert_yaxis()
+plt.savefig("test")
+"""

@@ -90,8 +90,7 @@ for i in xrange(size*2 - 1):
 			wi = wi + 1
 	print(pl)
 
-'''
-print "adjacency list: "
+print("adjacency list: ")
 for n, nbrs in graph.adj.items():
-	print str(n) + " -> " + str(nbrs)
-	'''
+	print(str(n) + " -> " + str(nbrs))
+

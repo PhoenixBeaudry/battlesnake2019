@@ -64,14 +64,14 @@ def generate_graph(strategy, gameboard):
     populateGraph(board)
 
     for bodypart in gameboard.myself:
-        enhance_new(board, bodypart, strategy['self_function'], myself=True)
+        spread_influence(board, bodypart, strategy['self_function'], 1)
 
     for food in gameboard.food:
-        enhance_new(board, food, strategy['food_function'])
+        spread_influence(board, food, strategy['food_function'])
 
     for enemy in gameboard.enemies:
         for enemypart in enemy:
-            enhance_new(board, enemypart, strategy['enemy_function'])
+            spread_influence(board, enemypart, strategy['enemy_function'])
 
     return board
 
@@ -91,15 +91,14 @@ def edges_of_depth_distance(board, start_node, depth):
 
         return nx.edges(board, nbunch=nodebunch)
 
-def enhance(board, start_node, func, myself=False):
-    weight = func(0)
-    depth = 1
-    while weight > 0:
-        edges_at_depth = edges_of_depth_distance(board, start_node, depth)
-        for edge in edges_at_depth:
-            board.adj[edge[0]][edge[1]]['weight'] = board.adj[edge[0]][edge[1]]['weight'] + weight
-        weight=func(depth)
-        depth = depth + 1
+def spread_influence(board, start_node, func, depth=8):
+    visited_edges = []
+    for radius in range(1, depth+1):
+        currentedges = edges_of_depth_distance(board, start_node, radius)
+        currentedges = list(set(currentedges) - set(visited_edges))
+        for edge in currentedges:
+            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + func(radius)
+        visited_edges = visited_edges + currentedges
 
 def populateGraph(board):
     for edge in board.edges:

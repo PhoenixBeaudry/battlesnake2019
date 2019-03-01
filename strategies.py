@@ -13,7 +13,7 @@ def self_function(depth):
 
 #Strategies:
 strat_one = {
-	'food_function' : poly_decay(-10000, 3),
-	'enemy_function' : poly_decay(10000, 3),
+	'food_function' : poly_decay(-100, 3),
+	'enemy_function' : poly_decay(100, 3),
 	'self_function' : self_function
 }
