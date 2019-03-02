@@ -10,8 +10,8 @@ from logic import *
 from strategies import *
 app = Bottle()
 
-debug = True
-info = True
+debug = False
+info = False
 
 turncount = 1
 
