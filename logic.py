@@ -234,22 +234,22 @@ def populate_graph(board):
 def head_to_head(gameboard, destination_edge):
     adjacent_spot = destination_edge
     enemy_head_list = []
-    adjacent_spot[0] + 1
+    adjacent_spot[0] = adjacent_spot[0] + 1
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
-    adjacent_spot[0] - 1
+    adjacent_spot[0] = adjacent_spot[0] - 1
     for enemy_head in gameboard.enemies:
         if adjacent_spot == genemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
-    adjacent_spot[1] + 1
+    adjacent_spot[1] = adjacent_spot[1] + 1
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
-    adjacent_spot[1] - 1
+    adjacent_spot[1] = adjacent_spot[1] - 1
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
