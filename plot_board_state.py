@@ -128,8 +128,7 @@ if(plot):
 
   nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 
-  nx.draw_networkx_edges(graph, pos, edgelist=edges_of_depth_distance(graph, (5, 5), 4), edge_color='red', width=6)
-  #nx.draw_networkx_edges(graph, pos, edge_color=edgeslist, width=6, edge_vmin=-200, edge_vmax=200, edge_cmap=cm.get_cmap('seismic', 12))
+  nx.draw_networkx_edges(graph, pos, edge_color=edgeslist, width=6, edge_vmin=-200, edge_vmax=200, edge_cmap=cm.get_cmap('seismic', 12))
 
   plt.axis('off')
   plt.gca().invert_yaxis()
