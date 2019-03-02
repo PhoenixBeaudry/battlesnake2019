@@ -84,6 +84,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
+    currentedges.remove(head_to_head(gameboard, ))
     while(True):
         if(deadenddebug):
             print("All edges: ", currentedges)
@@ -94,7 +95,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        if(head_to_head(gameboard, lightestedge) == [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
@@ -164,52 +165,6 @@ def edges_of_depth_distance(board, start_node, depth):
                         newbunch.append(nbr)
             nodebunch = nodebunch + newbunch
             outer_radius = newbunch
-            if(set(nodebunch) == set(nx.nodes(board))):
-                print("AHA WEVE REACHED ALL THE NODES")
-                break
-        return nx.edges(board, nbunch=nodebunch)
-
-# edges_of_depth_distance:
-# Returns all edges that are within a given depth
-# radius from a particular start node
-def alt_edges_of_depth_distance(board, start_node, depth):
-    sx, sy = start_node
-    nodebunch = [start_node]
-    if(depth == 1):
-        return nx.edges(board, nbunch=nodebunch)
-    else:
-        for i in range(1, depth):
-            newbunch = []
-            for ex, ey in nodebunch:
-                if ex > sx:
-                    newbunch.append((ex+1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-                elif ex < sx:
-                    newbunch.append((ex-1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-                else:
-                    newbunch.append((ex+1,ey))
-                    newbunch.append((ex-1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-            nodebunch = nodebunch + newbunch
             if(set(nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
                 break
