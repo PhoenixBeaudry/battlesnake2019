@@ -172,7 +172,7 @@ def edges_of_depth_distance(board, start_node, depth):
 # Given a starting node and an influence function of depth
 # enhance spreads that nodes influence radially through all edges
 # with a dropoff according to func(depth)
-def enhance(board, start_node, func, max_depth=11, myself=False):
+def enhance(board, start_node, func, max_depth=9, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []

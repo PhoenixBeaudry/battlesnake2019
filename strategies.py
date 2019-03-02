@@ -16,11 +16,11 @@ def log_decay(weight, base):
 # Enemy decay function that allows conjoining segments and edges
 # into enemy to be 100000 etc, while still having weighted polynomial
 # decay in radius around segments
-def enemy_decay(depth, weight=100, poly=3):
+def enemy_decay(depth, weight=200, poly=3):
 	if depth == 0:
 		return 100000
 	else:
-		return poly_decay(weight, poly)(depth)
+		return log_decay(weight, poly)(depth)
 
 def self_function(depth):
 	return 1000000
@@ -34,8 +34,8 @@ def const_zero(depth):
 #Strategies:
 hungry = {
 	'name' : "hungry",
-	'food_function' : poly_decay(-100, 3),
-	'foodmaxdepth' : 20,
+	'food_function' : log_decay(-250, 3),
+	'foodmaxdepth' : 10,
 	'enemy_function' : enemy_decay,
 	'self_function' : self_function,
 	'tail_function' : tail_function
@@ -43,7 +43,7 @@ hungry = {
 
 nothungry = {
 	'name' : "nothungry",
-	'food_function' : poly_decay(100, 3),
+	'food_function' : poly_decay(130, 3),
 	'foodmaxdepth' : 1,
 	'enemy_function' : enemy_decay,
 	'self_function' : self_function,
