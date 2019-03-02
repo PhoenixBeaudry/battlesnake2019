@@ -241,20 +241,20 @@ def head_to_head(gameboard, destination_edge):
     adjacent_spot = (adjacent_spot[0] + 1, adjacent_spot[1])
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0] - 1, adjacent_spot[1])
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0], adjacent_spot[1] + 1)
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0], adjacent_spot[1] - 1)
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     return enemy_head_list
