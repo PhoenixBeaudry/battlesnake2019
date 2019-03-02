@@ -120,7 +120,7 @@ if(plot):
   for edge in graph.edges:
   	edges[edge] = graph[edge[0]][edge[1]]['weight']
 
-  newedges = edges_of_depth_distance_two(graph, (5, 5), 3)
+  newedges = edges_of_depth_distance(graph, (5, 5), 3)
 
   print(newedges)
   

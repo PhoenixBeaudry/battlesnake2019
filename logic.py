@@ -169,61 +169,17 @@ def edges_of_depth_distance(board, start_node, depth):
                 break
         return nx.edges(board, nbunch=nodebunch)
 
-# edges_of_depth_distance:
-# Returns all edges that are within a given depth
-# radius from a particular start node
-def edges_of_depth_distance_two(board, start_node, depth):
-    sx, sy = start_node
-    nodebunch = [start_node]
-    if(depth == 1):
-        return nx.edges(board, nbunch=nodebunch)
-    else:
-        for i in range(1, depth):
-            newbunch = []
-            for ex, ey in nodebunch:
-                if ex > sx:
-                    newbunch.append((ex+1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-                elif ex < sx:
-                    newbunch.append((ex-1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-                else:
-                    newbunch.append((ex+1,ey))
-                    newbunch.append((ex-1,ey))
-                    if ey > sy:
-                        newbunch.append((ex,ey+1))
-                    elif ey < sy:
-                        newbunch.append((ex,ey-1))
-                    else:
-                        newbunch.append((ex,ey+1))
-                        newbunch.append((ex,ey-1))
-            nodebunch = nodebunch + newbunch
-            if(set(nodebunch) == set(nx.nodes(board))):
-                print("AHA WEVE REACHED ALL THE NODES")
-                break
-        return nx.edges(board, nbunch=nodebunch)
-
 # enhance:
 # Given a starting node and an influence function of depth
 # enhance spreads that nodes influence radially through all edges
 # with a dropoff according to func(depth)
-def enhance(board, start_node, func, myself=False):
+def enhance(board, start_node, func, max_depth=20, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []
     while weight != 0:
+        if depth > max_depth:
+            break
         currentedges = edges_of_depth_distance(board, start_node, depth)
         currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
@@ -233,8 +189,6 @@ def enhance(board, start_node, func, myself=False):
         weight = func(depth)
         visited_edges = visited_edges + currentedges
         depth = depth + 1
-
-
 
 # next_direction:
 # Given an edge incident to our snake_head node it returns 
@@ -282,21 +236,21 @@ def head_to_head(destination_edge):
     enemy_head_list = []
     adjacent_spot[0] + 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[0] - 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == genemy_head[0]
+        if adjacent_spot == genemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[1] + 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[1] - 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     return enemy_head_list
