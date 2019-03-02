@@ -161,9 +161,9 @@ def edges_of_depth_distance(board, start_node, depth):
                 for nbr in board[node]:
                     if nbr not in set(nodebunch):
                         newbunch.add(nbr)
-            nodebunch = nodebunch + newbunch
+            nodebunch = nodebunch.union(newbunch)
             outer_radius = newbunch
-            if(set(nodebunch) == set(nx.nodes(board))):
+            if((nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
                 break
         return nx.edges(board, nbunch=nodebunch)
