@@ -86,9 +86,10 @@ else:
     chosen_strategy = nothungry
 
 foresight = 2
-graph = generate_graph(nothungry, gameboard)
 
-print("Kornislav decided to go: ", next_direction(gameboard.myself[0], determine_safest_move(gameboard, graph, foresight, nothungry)))
+graph = generate_graph(chosen_strategy, gameboard)
+
+print("Kornislav decided to go: ", next_direction(gameboard.myself[0], determine_safest_move(gameboard, graph, foresight, chosen_strategy)))
 
 
 plot = True
@@ -99,6 +100,7 @@ if(plot):
   pos = {}
   for node in graph:
   	pos[node] = node
+
   #Draw all nodes
   nx.draw_networkx(graph, pos, font_size=7)
 
@@ -126,7 +128,8 @@ if(plot):
 
   nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 
-  nx.draw_networkx_edges(graph, pos, edge_color=edgeslist, width=6, edge_vmin=-200, edge_vmax=200, edge_cmap=cm.get_cmap('seismic', 12))
+  nx.draw_networkx_edges(graph, pos, edge_list=edges_of_depth_distance(graph, (5, 5), 4), edge_color='red')
+  #nx.draw_networkx_edges(graph, pos, edge_color=edgeslist, width=6, edge_vmin=-200, edge_vmax=200, edge_cmap=cm.get_cmap('seismic', 12))
 
   plt.axis('off')
   plt.gca().invert_yaxis()
