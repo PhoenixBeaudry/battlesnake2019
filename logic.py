@@ -152,16 +152,18 @@ def safe_in_steps(gameboard, strategy, move, steps):
 # radius from a particular start node
 def edges_of_depth_distance(board, start_node, depth):
     nodebunch = [start_node]
+    outer_radius = []
     if(depth == 1):
         return nx.edges(board, nbunch=nodebunch)
     else:
         for i in range(1, depth):
             newbunch = []
-            for node in nodebunch:
+            for node in outer_radius:
                 for nbr in board[node]:
                     if nbr not in nodebunch:
                         newbunch.append(nbr)
             nodebunch = nodebunch + newbunch
+            outer_radius = newbunch
             if(set(nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
                 break
