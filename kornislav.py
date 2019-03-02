@@ -8,6 +8,7 @@ from json import dumps
 import networkx as nx
 from logic import *
 from strategies import *
+import sys
 app = Bottle()
 
 debug = False
