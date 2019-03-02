@@ -4,6 +4,8 @@ from strategies import *
 import bottle
 import copy
 
+deadenddebug = False
+
 # Board:
 # Holds basic board information about size, food, and enemy snakes
 class Board:
@@ -103,32 +105,40 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
+        
     while(True):
+        if(deadenddebug):
+            print("All edges: ", currentedges)
         for edge in currentedges:
             if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
                 prevedge = lightestedge
                 lightestedge = edge
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+        if(deadenddebug):
+            print("Testing-----------------------------------------: ", lightestedge)
         if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
                 # Were dead anyway
-                return lightest_adjacent_edge(gameboard, board_graph)
-            currentedges.remove(edge)
+                print("Were Dead Kid.")
+                return lightest_adjacent_edge(gameboard, board_graph, edge)
+            currentedges.remove(lightestedge)
             lightestedgeweight = 10000000
     
 
 
 #Returns lightest edge
-def lightest_adjacent_edge(gameboard, board_graph):
+def lightest_adjacent_edge(gameboard, board_graph, myedge):
+    myedge = (myedge[1], myedge[0])
     lightestedgeweight = 10000000
     lightestedge = None
     currentedges = nx.edges(board_graph, gameboard.myself[0])
     for edge in currentedges:
-        if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
-            lightestedge = edge
-            lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+        if(edge != myedge):
+            if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+                lightestedge = edge
+                lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
     return lightestedge
 
 
@@ -186,6 +196,8 @@ def populate_graph(board):
 # Returns True on good move, False on bad
 def safe_in_steps(gameboard, strategy, move, steps):
     if(steps <= 0):
+        if(deadenddebug):
+            print("Reached end of recursion! Step was safe!")
         return True
 
     # New pseudo board
@@ -205,10 +217,17 @@ def safe_in_steps(gameboard, strategy, move, steps):
     newgraph = generate_graph(strategy, newgameboard)
 
     # Determine if lightest edge is below threshold
-    edge = lightest_adjacent_edge(newgameboard, newgraph)
+    edge = lightest_adjacent_edge(newgameboard, newgraph, move)
+
+    if(deadenddebug):
+        print("Trying to move to: ", edge)
     if(newgraph[edge[0]][edge[1]]['weight'] < 1500000):
         # Move is safe!
+        if(deadenddebug):
+            print(str(edge) + " was safe! Going a step further!")
         return safe_in_steps(newgameboard, strategy, edge, steps-1)
     else:
+        if(deadenddebug):
+            print(str(edge) + " was not safe! Return!")
         return False
 
