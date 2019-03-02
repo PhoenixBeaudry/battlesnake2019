@@ -161,9 +161,9 @@ def edges_of_depth_distance(board, start_node, depth):
                 for nbr in board[node]:
                     if nbr not in set(nodebunch):
                         newbunch.add(nbr)
-            nodebunch = nodebunch.union(newbunch)
+            nodebunch = nodebunch + newbunch
             outer_radius = newbunch
-            if((nodebunch) == set(nx.nodes(board))):
+            if(set(nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
                 break
         return nx.edges(board, nbunch=nodebunch)
@@ -175,18 +175,18 @@ def edges_of_depth_distance(board, start_node, depth):
 def enhance(board, start_node, func, max_depth=20, myself=False):
     weight = func(0)
     depth = 1
-    visited_edges = set()
+    visited_edges = []
     while weight:
         if depth > max_depth:
             break
-        currentedges = set(edges_of_depth_distance(board, start_node, depth))
-        currentedges = (currentedges) - (visited_edges)
+        currentedges = edges_of_depth_distance(board, start_node, depth)
+        currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
             board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + weight
         if myself:
             break
         weight = func(depth)
-        visited_edges = visited_edges.union(currentedges)
+        visited_edges = visited_edges + currentedges
         depth = depth + 1
 
 # next_direction:
