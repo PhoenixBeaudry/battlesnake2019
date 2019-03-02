@@ -150,7 +150,7 @@ def safe_in_steps(gameboard, strategy, move, steps):
 # edges_of_depth_distance:
 # Returns all edges that are within a given depth
 # radius from a particular start node
-def edges_of_depth_distance(board, start_node, depth):
+def former_edges_of_depth_distance(board, start_node, depth):
     nodebunch = [start_node]
     outer_radius = []
     if(depth == 1):
@@ -172,7 +172,7 @@ def edges_of_depth_distance(board, start_node, depth):
 # edges_of_depth_distance:
 # Returns all edges that are within a given depth
 # radius from a particular start node
-def edges_of_depth_distance_two(board, start_node, depth):
+def edges_of_depth_distance(board, start_node, depth):
     sx, sy = start_node
     nodebunch = [start_node]
     if(depth == 1):
