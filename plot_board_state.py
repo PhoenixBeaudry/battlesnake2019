@@ -5,6 +5,7 @@ from strategies import *
 import networkx as nx
 import sys
 import matplotlib
+from matplotlib import cm
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -101,11 +102,11 @@ if(plot):
   #Draw all nodes
   nx.draw_networkx(graph, pos, font_size=7)
 
-  #Color food nodes
-  #nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
+  Color food nodes
+  nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
 
   #Color self nodes
-  #nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.myself, node_color='blue')
+  nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.myself, node_color='blue')
 
   #Color enemy nodes
   enemylist = []
@@ -113,20 +114,19 @@ if(plot):
   	for enemypart in enemy:
   		enemylist.append(enemypart)
 
-  #nx.draw_networkx_nodes(graph, pos, nodelist=enemylist, node_color='black')
+  nx.draw_networkx_nodes(graph, pos, nodelist=enemylist, node_color='black')
 
   edges = {}
 
+  edgeslist = []
+
   for edge in graph.edges:
   	edges[edge] = graph[edge[0]][edge[1]]['weight']
+    edgeslist.append(graph[edge[0]][edge[1]]['weight'])
 
-  newedges = edges_of_depth_distance_two(graph, (5, 5), 3)
+  nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
 
-  print(newedges)
-  
-  nx.draw_networkx_edges(graph, pos, edgelist=newedges, edge_color='red', width=6)
-
-  #nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
+  nx.draw_networkx_edges(graph, pos, edge_color=edgeslist, width=6, edge_vmin=-200, edge_vmax=200, edge_cmap=cm.get_cmap('seismic', 12))
 
   plt.axis('off')
   plt.gca().invert_yaxis()

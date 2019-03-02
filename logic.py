@@ -84,7 +84,6 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
-    currentedges.remove(head_to_head(gameboard, ))
     while(True):
         if(deadenddebug):
             print("All edges: ", currentedges)
