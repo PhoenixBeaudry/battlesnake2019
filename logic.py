@@ -115,7 +115,6 @@ def safe_in_steps(gameboard, strategy, move, steps):
         if(deadenddebug):
             print("Reached end of recursion! Step was safe!")
         return True
-
     # New pseudo board
     newgameboard = copy.deepcopy(gameboard)
     # Determine location of new head node
