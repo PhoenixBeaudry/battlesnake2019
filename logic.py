@@ -84,6 +84,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
+    currentedges.remove(head_to_head(gameboard, ))
     while(True):
         if(deadenddebug):
             print("All edges: ", currentedges)
@@ -94,7 +95,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        if(head_to_head(gameboard, lightestedge) == [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
@@ -231,7 +232,7 @@ def populate_graph(board):
         board[edge[0]][edge[1]]['weight'] = 0
 
 # detects if the potential space is adjacent to an enemy head
-def head_to_head(destination_edge):
+def head_to_head(gameboard, destination_edge):
     adjacent_spot = destination_edge
     enemy_head_list = []
     adjacent_spot[0] + 1
