@@ -179,15 +179,12 @@ def enhance(board, start_node, func, max_depth=20, myself=False):
     visited_edges = []
     while weight:
         if depth > max_depth:
-            print("broke due to max depth reached")
             break
         currentedges = edges_of_depth_distance(board, start_node, depth)
         currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
             board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + weight
-            print("set edge " + str((edge[0], edge[1])) + " to weight = " + str(board[edge[0]][edge[1]]['weight'] + weight))
         if myself:
-            print("broke due to myself flag")
             break
         weight = func(depth)
         visited_edges = visited_edges + currentedges
