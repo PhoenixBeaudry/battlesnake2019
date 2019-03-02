@@ -105,8 +105,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
-        
-    while(True):
+    while(1):
         if(deadenddebug):
             print("All edges: ", currentedges)
         for edge in currentedges:
@@ -154,7 +153,7 @@ def edges_of_depth_distance(board, start_node, depth):
             newbunch = []
             for node in nodebunch:
                 for nbr in board[node]:
-                    if nbr not in nodebunch:
+                    if nbr not in set(nodebunch):
                         newbunch.append(nbr)
             nodebunch = nodebunch + newbunch
 

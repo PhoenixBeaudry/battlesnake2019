@@ -11,6 +11,7 @@ from strategies import *
 app = Bottle()
 
 debug = True
+info = True
 
 turncount = 1
 
@@ -72,6 +73,8 @@ def move():
     # Kornislav will output the current gameboard state data
     # which can then be used in tester.py to determine his thinking
     global turncount
+    if(info):
+        print("Turn: ", turncount)
     if(debug):
             print("Turn: ", turncount)
             print(data)
