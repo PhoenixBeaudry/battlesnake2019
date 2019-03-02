@@ -37,8 +37,8 @@ defaultdata = {
         "health": 90,
         "body": [
           {
-            "x": 0,
-            "y": 0
+            "x": 4,
+            "y": 5
           }
         ]
       },
@@ -65,8 +65,8 @@ defaultdata = {
     "health": 90,
     "body": [
       {
-        "x": 0,
-        "y": 0
+        "x": 4,
+        "y": 5
       }
     ]
   }

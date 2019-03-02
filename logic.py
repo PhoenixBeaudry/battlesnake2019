@@ -67,7 +67,7 @@ def generate_graph(strategy, gameboard):
             enhance(board, bodypart, strategy['self_function'], myself=True)
 
     for food in gameboard.food:
-        enhance(board, food, strategy['food_function'])
+        enhance(board, food, strategy['food_function'], max_depth=strategy['foodmaxdepth'])
 
     for enemy in gameboard.enemies:
         for enemypart in enemy:
@@ -161,7 +161,7 @@ def edges_of_depth_distance(board, start_node, depth):
                 for nbr in board[node]:
                     if nbr not in set(nodebunch):
                         newbunch.add(nbr)
-            nodebunch = nodebunch + newbunch
+            nodebunch = nodebunch | newbunch
             outer_radius = newbunch
             if(set(nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
