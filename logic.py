@@ -94,7 +94,21 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        if(head_to_head(gameboard, lightestedge) == [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        enemyheadedges = head_to_head(gameboard, lightestedge)
+        enemyheadedgestwo = []
+        enemylength = 0
+        edgesafe = False
+        for enemy in gameboard.enemies:
+            currentenemyhead = enemy[0]
+            for head, edge in enemyheadedges:
+                enemyheadedgestwo.append(head)
+            if(currentenemyhead in enemyheadedgestwo):
+                if(len(enemy) > enemylength):
+                    enemylength = len(enemy)
+        if(enemylength > len(myself)):
+            edgesafe = True
+            
+        if(edgesafe and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
