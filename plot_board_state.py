@@ -88,7 +88,7 @@ foresight = 2
 
 graph = generate_graph(chosen_strategy, gameboard)
 
-print(head_to_head(gameboard, ((0, 0),(0, 1))
+print(head_to_head(gameboard, ((0, 0),(0, 1))))
 
 print("Kornislav decided to go: ", next_direction(gameboard.myself[0], determine_safest_move(gameboard, graph, foresight, chosen_strategy)))
 
