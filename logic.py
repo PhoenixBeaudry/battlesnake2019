@@ -277,26 +277,26 @@ def populate_graph(board):
         board[edge[0]][edge[1]]['weight'] = 0
 
 # detects if the potential space is adjacent to an enemy head
-def head_to_head(destination_edge):
+def head_to_head(gameboard, destination_edge):
     adjacent_spot = destination_edge
     enemy_head_list = []
     adjacent_spot[0] + 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[0] - 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == genemy_head[0]
+        if adjacent_spot == genemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[1] + 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     adjacent_spot = destination_edge
     adjacent_spot[1] - 1
     for enemy_head in gameboard.enemies:
-        if adjacent_spot == enemy_head[0]
+        if adjacent_spot == enemy_head[0]:
             enemy_head_list.append(enemy_head)
     return enemy_head_list
