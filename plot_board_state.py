@@ -37,8 +37,8 @@ defaultdata = {
         "health": 90,
         "body": [
           {
-            "x": 1,
-            "y": 3
+            "x": 4,
+            "y": 5
           }
         ]
       },
@@ -48,12 +48,12 @@ defaultdata = {
         "health": 90,
         "body": [
           {
-            "x": 4,
-            "y": 4
+            "x": 1,
+            "y": 1
           },
           {
-            "x": 5,
-            "y": 4
+            "x": 2,
+            "y": 1
           }
         ]
       }
@@ -65,15 +65,15 @@ defaultdata = {
     "health": 90,
     "body": [
       {
-        "x": 1,
-        "y": 3
+        "x": 4,
+        "y": 5
       }
     ]
   }
 }
 
-testdata = {"game": {"id": "624ddbb5-68e7-4848-b642-35c5861bfc36"}, "turn": 168, "board": {"height": 11, "width": 11, "food": [{"x": 10, "y": 10}, {"x": 1, "y": 10}, {"x": 5, "y": 7}, {"x": 6, "y": 7}, {"x": 2, "y": 5}, {"x": 2, "y": 8}, {"x": 2, "y": 0}, {"x": 4, "y": 7}, {"x": 3, "y": 9}, {"x": 3, "y": 10}, {"x": 7, "y": 9}, {"x": 7, "y": 0}, {"x": 2, "y": 1}, {"x": 2, "y": 2}], "snakes": [{"id": "gs_JFTRyjXwh4K33cvXXkxDCX3Q", "name": "ryandjeric / Korni", "health": 85, "body": [{"x": 10, "y": 0}, {"x": 10, "y": 1}, {"x": 10, "y": 2}, {"x": 9, "y": 2}, {"x": 9, "y": 1}]}]}, "you": {"id": "gs_JFTRyjXwh4K33cvXXkxDCX3Q", "name": "ryandjeric / Korni", "health": 85, "body": [{"x": 10, "y": 0}, {"x": 10, "y": 1}, {"x": 10, "y": 2}, {"x": 9, "y": 2}, {"x": 9, "y": 1}]}}
-
+#testdata = {"game": {"id": "624ddbb5-68e7-4848-b642-35c5861bfc36"}, "turn": 168, "board": {"height": 11, "width": 11, "food": [{"x": 10, "y": 10}, {"x": 1, "y": 10}, {"x": 5, "y": 7}, {"x": 6, "y": 7}, {"x": 2, "y": 5}, {"x": 2, "y": 8}, {"x": 2, "y": 0}, {"x": 4, "y": 7}, {"x": 3, "y": 9}, {"x": 3, "y": 10}, {"x": 7, "y": 9}, {"x": 7, "y": 0}, {"x": 2, "y": 1}, {"x": 2, "y": 2}], "snakes": [{"id": "gs_JFTRyjXwh4K33cvXXkxDCX3Q", "name": "ryandjeric / Korni", "health": 85, "body": [{"x": 10, "y": 0}, {"x": 10, "y": 1}, {"x": 10, "y": 2}, {"x": 9, "y": 2}, {"x": 9, "y": 1}]}]}, "you": {"id": "gs_JFTRyjXwh4K33cvXXkxDCX3Q", "name": "ryandjeric / Korni", "health": 85, "body": [{"x": 10, "y": 0}, {"x": 10, "y": 1}, {"x": 10, "y": 2}, {"x": 9, "y": 2}, {"x": 9, "y": 1}]}}
+testdata = defaultdata
 
 #Setup board state
 gameboard = Board(testdata)
@@ -87,6 +87,8 @@ else:
 foresight = 2
 
 graph = generate_graph(chosen_strategy, gameboard)
+
+print(head_to_head(gameboard, ((0, 0),(0, 1))))
 
 print("Kornislav decided to go: ", next_direction(gameboard.myself[0], determine_safest_move(gameboard, graph, foresight, chosen_strategy)))
 

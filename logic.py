@@ -67,7 +67,7 @@ def generate_graph(strategy, gameboard):
             enhance(board, bodypart, strategy['self_function'], myself=True)
 
     for food in gameboard.food:
-        enhance(board, food, strategy['food_function'])
+        enhance(board, food, strategy['food_function'], max_depth=strategy['foodmaxdepth'])
 
     for enemy in gameboard.enemies:
         for enemypart in enemy:
@@ -94,7 +94,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        if(head_to_head(gameboard, lightestedge) = [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        if(head_to_head(gameboard, lightestedge) == [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
@@ -161,7 +161,11 @@ def edges_of_depth_distance(board, start_node, depth):
                 for nbr in board[node]:
                     if nbr not in set(nodebunch):
                         newbunch.add(nbr)
+<<<<<<< HEAD
             nodebunch = nodebunch.union(newbunch)
+=======
+            nodebunch = nodebunch | newbunch
+>>>>>>> afbc465856017e28e7502abbb23cad08c9568b79
             outer_radius = newbunch
             if((nodebunch) == set(nx.nodes(board))):
                 print("AHA WEVE REACHED ALL THE NODES")
@@ -241,20 +245,20 @@ def head_to_head(gameboard, destination_edge):
     adjacent_spot = (adjacent_spot[0] + 1, adjacent_spot[1])
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0] - 1, adjacent_spot[1])
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0], adjacent_spot[1] + 1)
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     adjacent_spot = destination_edge[marker]
     adjacent_spot = (adjacent_spot[0], adjacent_spot[1] - 1)
     for enemy_head in gameboard.enemies:
         if adjacent_spot == enemy_head[0]:
-            enemy_head_list.append(enemy_head)
+            enemy_head_list.append(adjacent_spot)
     return enemy_head_list
