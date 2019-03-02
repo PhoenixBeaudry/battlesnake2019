@@ -167,6 +167,49 @@ def edges_of_depth_distance(board, start_node, depth):
                 break
         return nx.edges(board, nbunch=nodebunch)
 
+# edges_of_depth_distance:
+# Returns all edges that are within a given depth
+# radius from a particular start node
+def edges_of_depth_distance_two(board, start_node, depth):
+    sx, sy = start_node
+    nodebunch = [start_node]
+    if(depth == 1):
+        return nx.edges(board, nbunch=nodebunch)
+    else:
+        for i in range(1, depth):
+            newbunch = []
+            for ex, ey in nodebunch:
+                if ex > sx:
+                    newbunch.append(board[(ex,ey)][(ex+1,ey)])
+                    if ey > sy:
+                        newbunch.append(board[(ex,ey)][(ex,ey+1)])
+                    elif ey < sy:
+                        newbunch.append(board[(ex,ey)][(ex,ey-1)])
+                    else:
+                        newbunch.append(board[(ex,ey)][(ex,ey+1)])
+                        newbunch.append(board[(ex,ey)][(ex,ey-1)])
+                elif ex < sx:
+                    newbunch.append(board[(ex,ey)][(ex-1,ey)])
+                    if ey > sy:
+                        newbunch.append(board[(ex,ey)][(ex,ey+1)])
+                    elif ey < sy:
+                        newbunch.append(board[(ex,ey)][(ex,ey-1)])
+                    else:
+                        newbunch.append(board[(ex,ey)][(ex,ey+1)])
+                        newbunch.append(board[(ex,ey)][(ex,ey-1)])
+                else:
+                    newbunch.append(board[(ex,ey)][(ex+1,ey)])
+                    newbunch.append(board[(ex,ey)][(ex-1,ey)])
+                    if ey > sy:
+                        newbunch.append(board[(ex,ey)][(ex,ey+1)])
+                    else:
+                        newbunch.append(board[(ex,ey)][(ex,ey-1)])
+            nodebunch = nodebunch + newbunch
+            if(set(nodebunch) == set(nx.nodes(board))):
+                print("AHA WEVE REACHED ALL THE NODES")
+                break
+        return nx.edges(board, nbunch=nodebunch)
+
 # enhance:
 # Given a starting node and an influence function of depth
 # enhance spreads that nodes influence radially through all edges
