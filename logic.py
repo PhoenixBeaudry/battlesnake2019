@@ -50,27 +50,6 @@ class Board:
         if self.myself in self.enemies:
             self.enemies.remove(self.myself)
 
-
-# next_direction:
-# Given an edge incident to our snake_head node it returns 
-# the direction in which to move to travel that edge        
-def next_direction(snake_head, input_destination):
-
-    if snake_head == input_destination[0]:
-        destination = input_destination[1]
-    else:
-        destination = input_destination[0]
-
-    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] > 0:
-        return "up"
-    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] < 0:
-        return "down"
-    if snake_head[0] - destination[0] < 0 and snake_head[1] - destination[1] == 0:
-        return "right"
-    if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
-        return "left"
-
-
 # generate_graph:
 # When passed the current gameboard information and a
 # particular strategy dictionary it populates the graph
@@ -105,7 +84,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
     lightestedge = None
     prevedge = None
     currentedges = list(nx.edges(board_graph, gameboard.myself[0]))
-    while(1):
+    while(True):
         if(deadenddebug):
             print("All edges: ", currentedges)
         for edge in currentedges:
@@ -124,68 +103,6 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 return lightest_adjacent_edge(gameboard, board_graph, edge)
             currentedges.remove(lightestedge)
             lightestedgeweight = 10000000
-    
-
-
-#Returns lightest edge
-def lightest_adjacent_edge(gameboard, board_graph, myedge):
-    myedge = (myedge[1], myedge[0])
-    lightestedgeweight = 10000000
-    lightestedge = None
-    currentedges = nx.edges(board_graph, gameboard.myself[0])
-    for edge in currentedges:
-        if(edge != myedge):
-            if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
-                lightestedge = edge
-                lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
-    return lightestedge
-
-
-# edges_of_depth_distance:
-# Returns all edges that are within a given depth
-# radius from a particular start node
-def edges_of_depth_distance(board, start_node, depth):
-    nodebunch = [start_node]
-    if(depth == 1):
-        return nx.edges(board, nbunch=nodebunch)
-    else:
-        for i in range(1, depth):
-            newbunch = []
-            for node in nodebunch:
-                for nbr in board[node]:
-                    if nbr not in nodebunch:
-                        newbunch.append(nbr)
-            nodebunch = nodebunch + newbunch
-
-        return nx.edges(board, nbunch=nodebunch)
-
-
-# enhance:
-# Given a starting node and an influence function of depth
-# enhance spreads that nodes influence radially through all edges
-# with a dropoff according to func(depth)
-def enhance(board, start_node, func, myself=False):
-    weight = func(0)
-    depth = 1
-    visited_edges = []
-    while weight != 0:
-        currentedges = edges_of_depth_distance(board, start_node, depth)
-        currentedges = list(set(currentedges) - set(visited_edges))
-        for edge in currentedges:
-            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + weight
-        if myself:
-            break
-        weight = func(depth)
-        visited_edges = visited_edges + currentedges
-        depth = depth + 1
-
-
-# populate_graph:
-# Gives all edges in n*n board graph a default weight
-def populate_graph(board):
-    for edge in board.edges:
-        board[edge[0]][edge[1]]['weight'] = 0
-
 
 
 # see_into_future:
@@ -230,3 +147,81 @@ def safe_in_steps(gameboard, strategy, move, steps):
             print(str(edge) + " was not safe! Return!")
         return False
 
+# edges_of_depth_distance:
+# Returns all edges that are within a given depth
+# radius from a particular start node
+def edges_of_depth_distance(board, start_node, depth):
+    nodebunch = [start_node]
+    if(depth == 1):
+        return nx.edges(board, nbunch=nodebunch)
+    else:
+        for i in range(1, depth):
+            newbunch = []
+            for node in nodebunch:
+                for nbr in board[node]:
+                    if nbr not in nodebunch:
+                        newbunch.append(nbr)
+            nodebunch = nodebunch + newbunch
+
+        return nx.edges(board, nbunch=nodebunch)
+
+# enhance:
+# Given a starting node and an influence function of depth
+# enhance spreads that nodes influence radially through all edges
+# with a dropoff according to func(depth)
+def enhance(board, start_node, func, myself=False):
+    weight = func(0)
+    depth = 1
+    visited_edges = []
+    while weight != 0:
+        currentedges = edges_of_depth_distance(board, start_node, depth)
+        currentedges = list(set(currentedges) - set(visited_edges))
+        for edge in currentedges:
+            board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + weight
+        if myself:
+            break
+        weight = func(depth)
+        visited_edges = visited_edges + currentedges
+        depth = depth + 1
+
+
+
+# next_direction:
+# Given an edge incident to our snake_head node it returns 
+# the direction in which to move to travel that edge        
+def next_direction(snake_head, input_destination):
+
+    if snake_head == input_destination[0]:
+        destination = input_destination[1]
+    else:
+        destination = input_destination[0]
+
+    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] > 0:
+        return "up"
+    if snake_head[0] - destination[0] == 0 and snake_head[1] - destination[1] < 0:
+        return "down"
+    if snake_head[0] - destination[0] < 0 and snake_head[1] - destination[1] == 0:
+        return "right"
+    if snake_head[0] - destination[0] > 0 and snake_head[1] - destination[1] == 0:
+        return "left"
+
+
+#Returns lightest edge
+def lightest_adjacent_edge(gameboard, board_graph, myedge):
+    myedge = (myedge[1], myedge[0])
+    lightestedgeweight = 10000000
+    lightestedge = None
+    currentedges = nx.edges(board_graph, gameboard.myself[0])
+    for edge in currentedges:
+        if(edge != myedge):
+            if(board_graph[edge[0]][edge[1]]['weight'] < lightestedgeweight):
+                lightestedge = edge
+                lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
+    return lightestedge
+
+
+# populate_graph:
+# Gives all edges in n*n board graph a default weight
+def populate_graph(board):
+    for edge in board.edges:
+        board[edge[0]][edge[1]]['weight'] = 0

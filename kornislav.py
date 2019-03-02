@@ -95,7 +95,7 @@ def move():
 
 
     # How far should we look ahead?
-    foresight = 3
+    foresight = 2
 
     # Select the lightest adjacent edge and move in that direction
     selected_move = next_direction(gameboard.myself[0], determine_safest_move(gameboard, board_graph, foresight, chosen_strategy))
