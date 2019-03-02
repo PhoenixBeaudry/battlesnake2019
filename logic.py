@@ -156,7 +156,7 @@ def edges_of_depth_distance(board, start_node, depth):
         return nx.edges(board, nbunch=nodebunch)
     else:
         for i in range(1, depth):
-            newbunch = {}
+            newbunch = set()
             for node in outer_radius:
                 for nbr in board[node]:
                     if nbr not in set(nodebunch):
