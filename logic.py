@@ -173,11 +173,13 @@ def edges_of_depth_distance(board, start_node, depth):
 # Given a starting node and an influence function of depth
 # enhance spreads that nodes influence radially through all edges
 # with a dropoff according to func(depth)
-def enhance(board, start_node, func, myself=False):
+def enhance(board, start_node, func, max_depth=20, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []
     while weight != 0:
+        if depth > max_depth:
+            break
         currentedges = edges_of_depth_distance(board, start_node, depth)
         currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
@@ -187,8 +189,6 @@ def enhance(board, start_node, func, myself=False):
         weight = func(depth)
         visited_edges = visited_edges + currentedges
         depth = depth + 1
-
-
 
 # next_direction:
 # Given an edge incident to our snake_head node it returns 
