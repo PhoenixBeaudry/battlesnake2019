@@ -38,7 +38,7 @@ hungry = {
 
 nothungry = {
 	'name' : "nothungry",
-	'food_function' : poly_decay(100, 3),
+	'food_function' : poly_decay(500, 3),
 	'enemy_function' : enemy_decay,
 	'self_function' : self_function,
 	'tail_function' : tail_function

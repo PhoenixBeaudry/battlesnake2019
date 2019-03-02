@@ -85,7 +85,7 @@ def move():
 
 
     # Hungry/NotHungry Meta Strategy Implementation
-    if(gameboard.myhealth < 40):
+    if(gameboard.myhealth < 30):
         chosen_strategy = hungry
     else:
         chosen_strategy = nothungry
