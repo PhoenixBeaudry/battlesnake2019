@@ -94,7 +94,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        if(head_to_head(gameboard, lightestedge) == [] and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
@@ -177,14 +177,17 @@ def enhance(board, start_node, func, max_depth=20, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []
-    while weight != 0:
+    while weight:
         if depth > max_depth:
+            print("broke due to max depth reached")
             break
         currentedges = edges_of_depth_distance(board, start_node, depth)
         currentedges = list(set(currentedges) - set(visited_edges))
         for edge in currentedges:
             board[edge[0]][edge[1]]['weight'] = board[edge[0]][edge[1]]['weight'] + weight
+            print("set edge " + str((edge[0], edge[1])) + " to weight = " + str(board[edge[0]][edge[1]]['weight'] + weight))
         if myself:
+            print("broke due to myself flag")
             break
         weight = func(depth)
         visited_edges = visited_edges + currentedges

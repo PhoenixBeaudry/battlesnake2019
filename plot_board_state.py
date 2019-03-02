@@ -102,7 +102,7 @@ if(plot):
   #Draw all nodes
   nx.draw_networkx(graph, pos, font_size=7)
 
-  Color food nodes
+  #Color food nodes
   nx.draw_networkx_nodes(graph, pos, nodelist=gameboard.food, node_color='green')
 
   #Color self nodes
@@ -121,7 +121,7 @@ if(plot):
   edgeslist = []
 
   for edge in graph.edges:
-  	edges[edge] = graph[edge[0]][edge[1]]['weight']
+    edges[edge] = graph[edge[0]][edge[1]]['weight']
     edgeslist.append(graph[edge[0]][edge[1]]['weight'])
 
   nx.draw_networkx_edge_labels(graph, pos, edges, font_size=6, font_color='blue')
