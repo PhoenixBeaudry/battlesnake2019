@@ -86,14 +86,17 @@ def move():
 
 
     # Hungry/NotHungry Meta Strategy Implementation
-    chosen_strategy = hungry
+    if(gameboard.myhealth < 80):
+        chosen_strategy = hungry
+    else:
+        chosen_strategy = nothungry
 
     # Populate edges according to current strategy
     board_graph = generate_graph(chosen_strategy, gameboard)
 
 
     # How far should we look ahead?
-    foresight = 14
+    foresight = 5
 
     # Select the lightest adjacent edge and move in that direction
     selected_move = next_direction(gameboard.myself[0], determine_safest_move(gameboard, board_graph, foresight, chosen_strategy))
