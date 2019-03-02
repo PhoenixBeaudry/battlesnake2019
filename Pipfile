@@ -10,7 +10,6 @@ v = {editable = true,version = "*"}
 bottle = "*"
 networkx = "*"
 matplotlib = "*"
-tkinter = "*"
 
 [requires]
 python_version = "3.7.2"
