@@ -94,21 +94,7 @@ def determine_safest_move(gameboard, board_graph, foresight, strategy):
                 lightestedgeweight = board_graph[edge[0]][edge[1]]['weight']
         if(deadenddebug):
             print("Testing-----------------------------------------: ", lightestedge)
-        enemyheadedges = head_to_head(gameboard, lightestedge)
-        enemyheadedgestwo = []
-        enemylength = 0
-        edgesafe = False
-        for enemy in gameboard.enemies:
-            currentenemyhead = enemy[0]
-            for head, edge in enemyheadedges:
-                enemyheadedgestwo.append(head)
-            if(currentenemyhead in enemyheadedgestwo):
-                if(len(enemy) > enemylength):
-                    enemylength = len(enemy)
-        if(enemylength > len(myself)):
-            edgesafe = True
-            
-        if(edgesafe and safe_in_steps(gameboard, strategy, lightestedge, foresight)):
+        if(safe_in_steps(gameboard, strategy, lightestedge, foresight)):
             return lightestedge
         else:
             if(len(currentedges) == 0):
@@ -186,7 +172,7 @@ def edges_of_depth_distance(board, start_node, depth):
 # Given a starting node and an influence function of depth
 # enhance spreads that nodes influence radially through all edges
 # with a dropoff according to func(depth)
-def enhance(board, start_node, func, max_depth=11, myself=False):
+def enhance(board, start_node, func, max_depth=9, myself=False):
     weight = func(0)
     depth = 1
     visited_edges = []
